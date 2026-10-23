@@ -1,0 +1,43 @@
+/* Keep the photograph visible while giving navigation a stable contrast. */
+.header {
+  height: 108px;
+  padding: 0 5%;
+  gap: 28px;
+  background: linear-gradient(180deg, rgba(8, 31, 36, .86), rgba(8, 31, 36, .72));
+  border-bottom: 1px solid #ffffff30;
+}
+.header .brand { flex-shrink: 0; font-size: 27px; }
+.header .brand small { font-size: 10px; letter-spacing: 2px; }
+.header nav { display: flex; align-items: center; gap: clamp(20px, 2.6vw, 42px); font-size: 16px; font-weight: 600; }
+.header nav a { display: inline-flex; align-items: center; min-height: 48px; position: relative; white-space: nowrap; }
+.header nav a::after { content: ''; position: absolute; bottom: 5px; left: 0; right: 0; height: 2px; background: #f5e8d1; transform: scaleX(0); transform-origin: left; transition: transform .18s ease; }
+.header nav a:hover::after, .header nav a:focus-visible::after { transform: scaleX(1); }
+.header-actions { gap: 22px; }
+.header .language { min-width: 64px; min-height: 48px; font-size: 14px; font-weight: 700; }
+.header .language span { opacity: .8; font-weight: 400; }
+.header .button { min-height: 50px; padding: 13px 22px; background: #f5e8d1; color: #184b59; border: 1px solid #f5e8d1; border-radius: 4px; font-size: 15px; font-weight: 700; white-space: nowrap; }
+.header .button:hover { background: #fff7e8; border-color: #fff7e8; transform: none; }
+.header a:focus-visible, .header button:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
+@media (min-width: 1101px) { .header { display: grid; grid-template-columns: 1fr auto 1fr; } .header-actions { justify-self: end; } }
+@media (min-width: 721px) and (max-width: 1100px) {
+  .header { padding: 0 3%; gap: 18px; }
+  .header .brand { font-size: 22px; gap: 8px; }
+  .header .brand small { font-size: 8px; }
+  .header nav { gap: 18px; font-size: 15px; }
+  .header-actions { gap: 10px; }
+  .header .button { padding: 12px 14px; font-size: 14px; }
+}
+@media (max-width: 900px) {
+  .header { height: auto; display: grid; grid-template-columns: 1fr auto; gap: 0 16px; padding: 14px 5% 0; }
+  .header nav { grid-column: 1 / -1; grid-row: 2; justify-content: center; gap: 32px; margin-top: 10px; border-top: 1px solid #ffffff26; }
+  .header-actions { grid-column: 2; grid-row: 1; }
+}
+@media (max-width: 720px) {
+  .header .brand { font-size: 22px; gap: 9px; }
+  .header .brand small { font-size: 8px; letter-spacing: 1.7px; }
+  .header .brand-icon { font-size: 38px; }
+  .header nav { font-size: 15px; gap: 28px; }
+  .header nav a { min-height: 46px; }
+  .header .language { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .header nav a::after { transition: none; } }

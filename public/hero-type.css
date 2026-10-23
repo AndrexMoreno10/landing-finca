@@ -1,0 +1,11 @@
+:root{--serif:'Lora',Georgia,serif;--sans:'Lato',Arial,sans-serif}
+h1,h2,h3{font-family:'Lora',Georgia,serif;font-weight:500;letter-spacing:-.7px}
+body,button,input,select,textarea{font-family:'Lato',Arial,sans-serif}
+.hero h1{max-width:650px;font-size:clamp(49px,5.7vw,75px);font-weight:500;line-height:1.12;letter-spacing:-1.9px}
+.hero-location{position:absolute;z-index:3;top:130px;right:7%;gap:10px;padding:10px 15px;background:rgba(18,39,30,.62);border:1px solid #f3eee1a0;border-radius:2px;box-shadow:0 4px 18px #08130d38;color:#fff;backdrop-filter:blur(8px);font-family:'Lato',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.35px}
+.location-pin{color:#efd49b;font-size:18px}
+.hero-content{max-width:660px}
+.hero-content p{font-family:'Lato',Arial,sans-serif;font-size:16px;line-height:1.65;font-weight:400}
+.hero-cta{font-family:'Lato',Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:.1px}
+.hero-highlight b{font-family:'Lato',Arial,sans-serif;font-weight:700}
+@media(max-width:720px){.hero-location{top:105px;right:6%;left:auto;font-size:9px;letter-spacing:1px;padding:9px 11px}.hero h1{font-size:clamp(43px,10.5vw,57px);line-height:1.12;letter-spacing:-1px}.hero-content p{font-size:14px}}

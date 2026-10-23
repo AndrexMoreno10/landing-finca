@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+data/
+*.log
+node_modules/
+test-results/
+.vercel/
+review-deploy/
+WORKING_PREFERENCES.md
+SESSION_CONTEXT.md

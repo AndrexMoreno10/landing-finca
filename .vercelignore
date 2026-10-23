@@ -1,0 +1,9 @@
+.env
+.env.*
+data
+node_modules
+test-results
+review-deploy
+*.log
+SESSION_CONTEXT.md
+WORKING_PREFERENCES.md

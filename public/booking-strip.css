@@ -1,0 +1,34 @@
+.booking-strip { padding: 28px 32px 20px; border-top: 3px solid #216b79; }
+.booking-strip form { gap: 24px; grid-template-columns: 1fr 1fr 1fr 1.3fr; }
+.booking-strip label span { margin-bottom: 8px; color: #405c64; font-size: 13px; font-weight: 700; letter-spacing: .6px; }
+.booking-strip input, .booking-strip select { min-height: 52px; font-size: 18px; font-weight: 700; color: #184b59; }
+.booking-strip .button { min-height: 62px; padding: 16px 20px; font-size: 17px; font-weight: 700; background: #216b79; }
+.booking-strip .button:hover { background: #185866; transform: none; }
+.booking-strip .strip-caption { margin-top: 20px; color: #57665f; font-size: 12px; line-height: 1.6; }
+@media (min-width: 721px) and (max-width: 1000px) {
+  .booking-strip { padding: 24px 20px 18px; }
+  .booking-strip form { gap: 16px; }
+  .booking-strip label { padding-right: 12px; }
+  .booking-strip input, .booking-strip select { font-size: 16px; }
+  .booking-strip .button { font-size: 15px; padding: 14px 12px; }
+}
+@media (max-width: 720px) {
+  .booking-strip { padding: 22px 18px 18px; }
+  .booking-strip form { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px 12px; }
+  .booking-strip label { padding-right: 8px; }
+  .booking-strip label span { font-size: 12px; letter-spacing: .4px; margin-bottom: 4px; }
+  .booking-strip input, .booking-strip select { font-size: 16px; min-height: 48px; }
+  .booking-strip label:nth-child(3) { grid-column: 1 / -1; border-right: 0; padding-right: 0; border-top: 1px solid var(--line); padding-top: 14px; }
+  .booking-strip .button { grid-column: 1 / -1; min-height: 56px; font-size: 17px; }
+  .booking-strip .strip-caption { font-size: 12px; margin-top: 15px; }
+}
+.booking-strip { padding: 30px 34px 22px; background: #fffefa; box-shadow: 0 18px 40px #163f4a12; }
+.booking-strip form { align-items: stretch; gap: 20px; }
+.booking-strip label { justify-content: center; }
+.booking-strip label span { color: #355761; font-size: 15px; font-weight: 700; letter-spacing: .8px; }
+.booking-strip input,.booking-strip select { min-height: 56px; color: #184b59; font-size: 19px; font-weight: 700; letter-spacing: .1px; }
+.booking-strip .button { min-height: 60px; align-self: center; font-size: 17px; font-weight: 700; letter-spacing: .1px; box-shadow: 0 7px 16px #184b5925; }
+.booking-strip .button:hover { box-shadow: 0 9px 20px #184b5935; }
+.booking-strip .strip-caption { margin-top: 18px; color: #4c6266; font-size: 13px; font-weight: 500; }
+@media (min-width: 721px) and (max-width: 1000px) { .booking-strip { padding: 26px 22px 20px; }.booking-strip label span { font-size: 14px; }.booking-strip input,.booking-strip select { font-size: 17px; } }
+@media (max-width: 720px) { .booking-strip { padding: 24px 18px 20px; }.booking-strip label span { font-size: 13px; }.booking-strip input,.booking-strip select { min-height: 50px; font-size: 17px; }.booking-strip .strip-caption { font-size: 12px; } }
