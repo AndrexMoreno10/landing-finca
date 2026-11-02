@@ -884,3 +884,66 @@ button:focus-visible, .button:focus-visible, .mobile-book > b:focus-visible {
 @media (prefers-reduced-motion: reduce) { .experience-stats > div { transition: none; } .experience-stats > div:hover { transform: none; } }
 
 @media (min-width: 1001px) { .amenities .section-heading { align-items: center; } }
+
+/* Experience capacity widget: warm, tactile, and compact. */
+.experience-stats {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  gap: 8px;
+  padding: 9px;
+  border-color: #76513a;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #2a1c15 0%, #20140f 72%);
+  box-shadow: 0 14px 34px #10090530, inset 0 1px #ffffff0a;
+  animation: experience-widget-in .7s cubic-bezier(.2,.75,.25,1) both;
+}
+.experience-stats::before {
+  position: absolute;
+  z-index: -1;
+  top: -75px;
+  right: 10%;
+  width: 230px;
+  height: 150px;
+  border-radius: 50%;
+  background: #f2a35a18;
+  content: "";
+  filter: blur(34px);
+  pointer-events: none;
+}
+.experience-stats > div {
+  min-height: 94px;
+  justify-content: center;
+  padding: 12px 15px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  transition: transform .28s ease, background-color .28s ease, border-color .28s ease;
+}
+.experience-stats > div:hover,
+.experience-stats > div:focus-visible {
+  transform: translateY(-3px);
+  border-color: #f2a35a55;
+  background: #f2a35a0d;
+}
+.experience-stats strong { color: #f2a35a; font-size: clamp(38px, 3.2vw, 48px); }
+.experience-stats span { color: #d7c3b2; font-size: 12px; letter-spacing: .015em; }
+@keyframes experience-widget-in {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 1000px) {
+  .experience-stats { width: min(100%, 560px); }
+  .experience-stats > div { min-height: 80px; }
+}
+@media (max-width: 480px) {
+  .experience-stats { gap: 4px; padding: 7px; }
+  .experience-stats > div { min-height: 72px; padding: 9px 7px; }
+  .experience-stats strong { font-size: clamp(31px, 10vw, 39px); }
+  .experience-stats span { font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience-stats { animation: none; }
+  .experience-stats > div { transition: none; }
+  .experience-stats > div:hover,
+  .experience-stats > div:focus-visible { transform: none; }
+}
