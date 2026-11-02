@@ -9,3 +9,6 @@ test-results/
 review-deploy/
 WORKING_PREFERENCES.md
 SESSION_CONTEXT.md
+
+# Local Graphify index
+graphify-out/

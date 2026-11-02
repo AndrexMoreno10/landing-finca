@@ -10,7 +10,7 @@ for (const item of await readdir(resolve(root, 'public'), {withFileTypes:true}))
   await cp(resolve(root,'public',item.name), resolve(output,item.name), {recursive:true});
 }
 let html = await readFile(resolve(output,'index.html'),'utf8');
-html = html.replace('</head>', '<meta name="robots" content="noindex,nofollow"><script src="/review-mode.js" defer></script><style>.review-notice{padding:10px 20px;text-align:center;background:#e3eeeb;color:#173c43;font:500 12px/1.6 Manrope,Arial,sans-serif}.review-notice p{margin:0;color:inherit}#contact-step{display:none!important}</style></head>');
+html = html.replace('</head>', '<meta name="robots" content="noindex,nofollow"><script src="/review-mode.js" defer></script><style>.review-notice{padding:10px 20px;text-align:center;background:#241812;color:#ffd08a;border-bottom:1px solid #68462f;font:600 12px/1.6 Arial,sans-serif}.review-notice p{margin:0;color:inherit}#contact-step{display:none!important}</style></head>');
 html = html.replace('<body>', '<body><aside class="review-notice"><p data-es="Versión de revisión · Calendario de ejemplo. No recibe reservas ni pagos." data-en="Review version · Sample calendar. No bookings or payments are accepted.">Versión de revisión · Calendario de ejemplo. No recibe reservas ni pagos.</p></aside>');
 html = html.replace('La disponibilidad se actualiza con las reservas confirmadas. Tu solicitud queda sujeta a confirmación.', 'Calendario demostrativo. Las fechas y tarifas deben validarse con los propietarios.');
 html = html.replace('Availability reflects confirmed bookings. Requests are subject to confirmation.', 'Demonstration calendar. Dates and rates must be checked with the owners.');
@@ -33,7 +33,11 @@ await mkdir(resolve(output,'review-api'),{recursive:true});
 const fixtures = {
   config: {nightly:1500000,cleaning:0,whatsapp:'',marketplace:'',bank:null,paymentReady:false,pixel:null,fx:null,blocks:[],reviewMode:true},
   availability: {blocks:[],reviewMode:true},
-  reviews: []
+  reviews: [
+    {name:'Muestra visual 01',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'Aquí iría el comentario real de una familia sobre su estadía en el chalet.',commentEn:'A real guest comment about their stay at the chalet would appear here.',tag:'Texto de ejemplo · No es una reseña real',tagEn:'Sample text · Not a real review'},
+    {name:'Muestra visual 02',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'Este espacio mostrará una opinión auténtica cuando haya sido revisada y aprobada.',commentEn:'This card will show an authentic guest review once it has been checked and approved.',tag:'Texto de ejemplo · No es una reseña real',tagEn:'Sample text · Not a real review'},
+    {name:'Muestra visual 03',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'La tarjeta final puede destacar una experiencia real, por ejemplo la piscina o la vista.',commentEn:'The final card can highlight a real experience, such as the pool or the view.',tag:'Texto de ejemplo · No es una reseña real',tagEn:'Sample text · Not a real review'}
+  ]
 };
 for (const [name,data] of Object.entries(fixtures)) await writeFile(resolve(output,'review-api',name+'.json'),JSON.stringify(data));
 await writeFile(resolve(output,'robots.txt'),'User-agent: *\nDisallow: /\n');
