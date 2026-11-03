@@ -1000,3 +1000,14 @@ button:focus-visible, .button:focus-visible, .mobile-book > b:focus-visible {
   .experience-stats strong { font-size: clamp(30px, 9vw, 36px); }
   .experience-stats span { font-size: 11px; }
 }
+
+/* Keep copy and capacity together while the tablet landscape has room. */
+@media (min-width: 640px) and (max-width: 1000px) {
+  .amenities .section-heading { grid-template-columns: minmax(0, 1.08fr) minmax(280px, .92fr); gap: clamp(18px, 3vw, 32px); align-items: center; }
+  .amenities .section-heading > div:first-child { min-width: 0; }
+  .amenities .section-heading h2 { font-size: clamp(30px, 5vw, 42px); line-height: 1.12; }
+  .experience-intro { max-width: 34ch; font-size: 14px; }
+  .experience-stats { width: 100%; min-width: 0; }
+  .experience-stats > div { min-height: 112px; padding-inline: 5px; }
+  .experience-stats span { font-size: 11px; }
+}
