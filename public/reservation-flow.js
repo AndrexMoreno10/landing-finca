@@ -13,7 +13,17 @@
     const a = form.elements.arrival.value, d = form.elements.departure.value, guests = form.elements.guests.value;
     if (!a || !d) return;
     const nights = (Date.parse(d) - Date.parse(a)) / 86400000;
-    document.querySelector('#contact-summary').textContent = `${dateLabel(a)} \u2192 ${dateLabel(d)} \u00b7 ${guests} ${t('hu\u00e9spedes', 'guests')} \u00b7 ${nights} ${t(nights === 1 ? 'noche' : 'noches', nights === 1 ? 'night' : 'nights')}`;
+    const summary = document.querySelector('#contact-summary');
+    const dates = document.createElement('strong');
+    dates.className = 'contact-summary-dates';
+    dates.textContent = `${dateLabel(a)} \u2192 ${dateLabel(d)}`;
+    const guestsChip = document.createElement('span');
+    guestsChip.className = 'contact-summary-chip';
+    guestsChip.textContent = `${guests} ${t('hu\u00e9spedes', 'guests')}`;
+    const nightsChip = document.createElement('span');
+    nightsChip.className = 'contact-summary-chip';
+    nightsChip.textContent = `${nights} ${t(nights === 1 ? 'noche' : 'noches', nights === 1 ? 'night' : 'nights')}`;
+    summary.replaceChildren(dates, guestsChip, nightsChip);
   }
   form.elements.arrival.addEventListener('change', sync);
   form.elements.departure.addEventListener('change', sync);
@@ -21,15 +31,22 @@
   new MutationObserver(sync).observe(quote, { childList: true, subtree: true, characterData: true });
   continueButton.addEventListener('click', () => {
     if (!ready()) return;
-    updateSummary(); stay.hidden = true; contact.hidden = false;
+    updateSummary(); stay.hidden = true; contact.hidden = false; form.classList.add('is-contact-step');
+    contact.classList.remove('is-entering');
+    requestAnimationFrame(() => {
+      contact.classList.add('is-entering');
+      window.setTimeout(() => contact.classList.remove('is-entering'), 520);
+    });
+    document.querySelector('.booking-progress').classList.add('is-contact');
     document.querySelector('#progress-stay').classList.remove('is-active');
     document.querySelector('#progress-stay').classList.add('is-complete');
     document.querySelector('#progress-contact').classList.add('is-active');
-    contact.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+    document.querySelector('.contact-summary').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     form.elements.name.focus({ preventScroll: true });
   });
   document.querySelector('#edit-stay').addEventListener('click', () => {
-    contact.hidden = true; stay.hidden = false;
+    contact.hidden = true; stay.hidden = false; form.classList.remove('is-contact-step');
+    document.querySelector('.booking-progress').classList.remove('is-contact');
     document.querySelector('#progress-contact').classList.remove('is-active');
     document.querySelector('#progress-stay').classList.add('is-active');
     document.querySelector('#progress-stay').classList.remove('is-complete');

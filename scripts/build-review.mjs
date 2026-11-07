@@ -10,20 +10,19 @@ for (const item of await readdir(resolve(root, 'public'), {withFileTypes:true}))
   await cp(resolve(root,'public',item.name), resolve(output,item.name), {recursive:true});
 }
 let html = await readFile(resolve(output,'index.html'),'utf8');
-html = html.replace('</head>', '<meta name="robots" content="noindex,nofollow"><script src="/review-mode.js" defer></script><style>.review-notice{padding:10px 20px;text-align:center;background:#241812;color:#ffd08a;border-bottom:1px solid #68462f;font:600 12px/1.6 Arial,sans-serif}.review-notice p{margin:0;color:inherit}#contact-step{display:none!important}</style></head>');
-html = html.replace('<body>', '<body><aside class="review-notice"><p data-es="Versión de revisión · Calendario de ejemplo. No recibe reservas ni pagos." data-en="Review version · Sample calendar. No bookings or payments are accepted.">Versión de revisión · Calendario de ejemplo. No recibe reservas ni pagos.</p></aside>');
-html = html.replace('La disponibilidad se actualiza con las reservas confirmadas. Tu solicitud queda sujeta a confirmación.', 'Calendario demostrativo. Las fechas y tarifas deben validarse con los propietarios.');
+html = html.replace('</head>', '<meta name="robots" content="noindex,nofollow"><script src="/review-mode.js" defer></script></head>');
+html = html.replace('La disponibilidad se actualiza con las reservas confirmadas. Tu solicitud queda sujeta a confirmaci\u00f3n.', 'Calendario demostrativo. Las fechas y tarifas deben validarse con los propietarios.');
 html = html.replace('Availability reflects confirmed bookings. Requests are subject to confirmation.', 'Demonstration calendar. Dates and rates must be checked with the owners.');
 await writeFile(resolve(output,'index.html'),html);
 await writeFile(resolve(output,'review-mode.js'), `(() => {
-  const message = () => document.documentElement.lang === 'en' ? 'This is a review version. Bookings and reviews are not submitted.' : 'Esta es una versión de revisión. No se envían reservas ni reseñas.';
+  const message = () => document.documentElement.lang === 'en' ? 'This is a review version. Bookings and reviews are not submitted.' : 'Esta es una versi\u00f3n de revisi\u00f3n. No se env\u00edan reservas ni rese\u00f1as.';
   function explain(event) {
     event.preventDefault(); event.stopImmediatePropagation();
     const box = document.querySelector('#toast'); box.textContent = message(); box.style.display = 'block';
     setTimeout(() => { box.style.display = 'none'; }, 6000);
   }
   document.addEventListener('click', event => {
-    if (event.target.closest('#continue-booking, #write-review, #floating-whatsapp')) explain(event);
+    if (event.target.closest('#write-review, #floating-whatsapp')) explain(event);
   }, true);
   document.addEventListener('submit', event => {
     if (event.target.id !== 'quick-form') explain(event);
@@ -34,9 +33,9 @@ const fixtures = {
   config: {nightly:1500000,cleaning:0,whatsapp:'',marketplace:'',bank:null,paymentReady:false,pixel:null,fx:null,blocks:[],reviewMode:true},
   availability: {blocks:[],reviewMode:true},
   reviews: [
-    {name:'Muestra visual 01',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'Aquí iría el comentario real de una familia sobre su estadía en el chalet.',commentEn:'A real guest comment about their stay at the chalet would appear here.',tag:'Texto de ejemplo · No es una reseña real',tagEn:'Sample text · Not a real review'},
-    {name:'Muestra visual 02',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'Este espacio mostrará una opinión auténtica cuando haya sido revisada y aprobada.',commentEn:'This card will show an authentic guest review once it has been checked and approved.',tag:'Texto de ejemplo · No es una reseña real',tagEn:'Sample text · Not a real review'},
-    {name:'Muestra visual 03',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'La tarjeta final puede destacar una experiencia real, por ejemplo la piscina o la vista.',commentEn:'The final card can highlight a real experience, such as the pool or the view.',tag:'Texto de ejemplo · No es una reseña real',tagEn:'Sample text · Not a real review'}
+    {name:'Muestra visual 01',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'AquÃ­ irÃ­a el comentario real de una familia sobre su estadÃ­a en el chalet.',commentEn:'A real guest comment about their stay at the chalet would appear here.',tag:'Texto de ejemplo Â· No es una reseÃ±a real',tagEn:'Sample text Â· Not a real review'},
+    {name:'Muestra visual 02',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'Este espacio mostrarÃ¡ una opiniÃ³n autÃ©ntica cuando haya sido revisada y aprobada.',commentEn:'This card will show an authentic guest review once it has been checked and approved.',tag:'Texto de ejemplo Â· No es una reseÃ±a real',tagEn:'Sample text Â· Not a real review'},
+    {name:'Muestra visual 03',rating:5,sample:true,dateLabel:'Ejemplo visual',dateLabelEn:'Visual example',commentEs:'La tarjeta final puede destacar una experiencia real, por ejemplo la piscina o la vista.',commentEn:'The final card can highlight a real experience, such as the pool or the view.',tag:'Texto de ejemplo Â· No es una reseÃ±a real',tagEn:'Sample text Â· Not a real review'}
   ]
 };
 for (const [name,data] of Object.entries(fixtures)) await writeFile(resolve(output,'review-api',name+'.json'),JSON.stringify(data));

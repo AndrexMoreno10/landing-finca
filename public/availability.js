@@ -13,7 +13,7 @@
   const arrivalValue=document.querySelector('#selected-arrival'),departureValue=document.querySelector('#selected-departure');
   const t=(es,en)=>lang()==='es'?es:en;
   const overlaps=(a,d)=>state.blocks.some(b=>a<b.departure&&d>b.arrival);
-  const visibleMonths=()=>matchMedia('(max-width:720px)').matches?1:2;
+  const visibleMonths=()=>1;
   async function load(){
     const token=++state.request;state.loading=true;render();
     const start=new Date(Date.UTC(state.month.getFullYear(),state.month.getMonth(),1));
@@ -73,7 +73,7 @@
   document.querySelector('#calendar-prev').addEventListener('click',()=>{state.month=new Date(state.month.getFullYear(),state.month.getMonth()-1,1);state.arrival='';state.departure='';load()});
   document.querySelector('#calendar-next').addEventListener('click',()=>{state.month=new Date(state.month.getFullYear(),state.month.getMonth()+1,1);state.arrival='';state.departure='';load()});
   retry.addEventListener('click',load);
-  quote.addEventListener('click',()=>{if(!state.arrival||!state.departure)return;const form=document.querySelector('#reservation-form');form.elements.arrival.value=state.arrival;form.elements.departure.value=state.departure;form.elements.departure.min=state.arrival;form.elements.arrival.dispatchEvent(new Event('change',{bubbles:true}));document.querySelector('#reservar').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+  quote.addEventListener('click',()=>{if(!state.arrival||!state.departure)return;const form=document.querySelector('#reservation-form');form.elements.arrival.value=state.arrival;form.elements.departure.value=state.departure;form.elements.departure.min=state.arrival;form.elements.arrival.dispatchEvent(new Event('change',{bubbles:true}));if(matchMedia('(max-width:720px)').matches)document.querySelector('#reservar').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
   new MutationObserver(()=>{if(state.loaded)render()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   matchMedia('(max-width:720px)').addEventListener('change',load);
   load();

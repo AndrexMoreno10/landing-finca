@@ -1,0 +1,11 @@
+.env*
+data/
+node_modules/
+.git/
+review-deploy/
+test-results/
+graphify-out/
+public/assets/
+assets/
+media/
+*.log
