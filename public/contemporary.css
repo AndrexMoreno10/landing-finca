@@ -1634,3 +1634,6 @@ button:focus-visible, .button:focus-visible, .mobile-book > b:focus-visible {
   .guest-picker { align-items: flex-start; flex-direction: column; gap: 12px; }
   .guest-counter { width: 100%; justify-content: space-between; }
 }
+
+/* Keep the reservation progress labels legible on the dark card. */
+.reservation-card .progress-step strong { color: inherit; font-weight: 700; }
