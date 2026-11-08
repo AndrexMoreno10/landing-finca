@@ -1,35 +1,93 @@
-const {chromium}=require('@playwright/test');
-const assert=require('node:assert/strict');
-const fs=require('node:fs');
-(async()=>{
- const browser=await chromium.launch({headless:true,...(process.env.BROWSER_EXECUTABLE?{executablePath:process.env.BROWSER_EXECUTABLE}:{})});
- try{
- const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://localhost:3000',{waitUntil:'networkidle'});
- await page.locator('img').evaluateAll(async imgs=>{for(const img of imgs){img.loading='eager';await img.decode()}});
- await page.locator('#carousel-next').click();
- assert.equal(await page.locator('.carousel-index').innerText(),'02 / 02');
- await page.locator('#carousel-prev').click();
- assert.equal(await page.locator('.carousel-index').innerText(),'01 / 02');
- await page.locator('#carousel-pause').click();
- assert.equal(await page.locator('#carousel-pause').getAttribute('aria-pressed'),'true');
- await page.locator('#carousel-next').focus();await page.keyboard.press('ArrowRight');
- assert.equal(await page.locator('.carousel-index').innerText(),'02 / 02');
- await page.locator('#carousel-prev').click();
- await page.locator('.hero').screenshot({path:'test-results/desktop-hero.png'});
- await page.screenshot({path:'test-results/desktop.png',fullPage:true});
- assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
- assert.equal(await page.locator('img').evaluateAll(imgs=>imgs.every(i=>i.complete&&i.naturalWidth>0)),true);
- const arrival=new Date(Date.now()+40*86400000).toISOString().slice(0,10),departure=new Date(Date.now()+43*86400000).toISOString().slice(0,10);
- await page.locator('#quick-form [name=arrival]').fill(arrival);await page.locator('#quick-form [name=departure]').fill(departure);await page.locator('#quick-form button').click();
- assert.match(await page.locator('#quote').innerText(),/4\.500\.000/);
- await page.locator('#language').click();assert.equal(await page.locator('html').getAttribute('lang'),'en');assert.match(await page.locator('#quote').innerText(),/Estimated total/);
- let leadPayload;await page.route('**/api/leads',async route=>{leadPayload=route.request().postDataJSON();await route.fulfill({json:{id:'test-request-123',quote:{arrival,departure,guests:10,nights:3,total:4500000}}})});
- await page.locator('#continue-booking').click();await page.locator('#contact-step').waitFor({state:'visible'});await page.locator('#country-toggle').click();await page.locator('.country-option[data-iso="MX"]').click();assert.equal(await page.locator('#country-dial').innerText(),'+52');await page.locator('#reservation-form [name=name]').fill('Browser test');await page.locator('#reservation-form [name=phone]').fill('5512345678');await page.locator('#reservation-form [name=consent]').check();await page.locator('#reservation-form [type=submit]').click();await page.locator('#booking-success').waitFor({state:'visible'});assert.match(await page.locator('#form-status').innerText(),/Request received/);assert.equal(leadPayload.phone,'+52 5512345678');assert.equal(leadPayload.email,'');
- await page.route('**/api/reviews',async route=>{if(route.request().method()==='POST')await route.fulfill({json:{status:'pending'}});else await route.continue()});
- await page.locator('#write-review').click();await page.locator('#review-form [name=name]').fill('Test visitor');await page.locator('#review-form [name=comment]').fill('A lovely experience in the coffee region.');await page.locator('#review-form button').click();await page.locator('#modal').waitFor({state:'hidden'});assert.match(await page.locator('#toast').innerText(),/pending approval/);
- await page.setViewportSize({width:390,height:844});await page.goto('http://localhost:3000',{waitUntil:'networkidle'});await page.screenshot({path:'test-results/mobile.png',fullPage:true});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await page.waitForTimeout(250);assert.equal(await page.locator('.mobile-book').isVisible(),false);await page.locator('.amenity-grid').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));await page.waitForTimeout(250);assert.equal(await page.locator('.mobile-book').isVisible(),true);await page.locator('#availability').scrollIntoViewIfNeeded();await page.waitForTimeout(250);assert.equal(await page.locator('.mobile-book').isVisible(),false);
- await page.locator('[data-photo]').first().click();await page.locator('#modal').waitFor({state:'visible'});await page.keyboard.press('Escape');assert.equal(await page.locator('#modal').isVisible(),false);
- assert.deepEqual(errors,[]);console.log('PASS: desktop/mobile layouts, photos, bilingual quote, lead confirmation, pending review, gallery and no browser exceptions.');
- }finally{await browser.close()}
-})().catch(e=>{console.error(e);process.exitCode=1});
+const { chromium } = require('@playwright/test');
+const assert = require('node:assert/strict');
+require('node:fs').mkdirSync('test-results', { recursive: true });
+
+(async () => {
+  const browser = await chromium.launch({
+    headless: true,
+    ...(process.env.BROWSER_EXECUTABLE ? { executablePath: process.env.BROWSER_EXECUTABLE } : {}),
+  });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 960 } });
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto('http://localhost:3000', { waitUntil: 'domcontentloaded' });
+    await page.locator('#calendar-month-label').waitFor();
+    await page.locator('#availability-calendar .calendar-day.is-available').first().waitFor({ timeout: 10000 });
+    await page.locator('img').evaluateAll((images) => images.forEach((image) => { image.loading = 'eager'; }));
+    await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => image.decode().catch(() => null))));
+
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    assert.equal(await page.locator('img').evaluateAll((images) => images.every((image) => image.complete && image.naturalWidth > 0)), true);
+    assert.equal(await page.locator('#ubicacion .location-distance').count(), 3);
+    assert.equal(await page.locator('#recuerdos .premium-gallery-grid article').count(), 4);
+    await page.screenshot({ path: 'test-results/desktop-premium.png', fullPage: true });
+    for (const [width, height] of [[1280, 800], [768, 1024], [390, 844], [360, 800]]) {
+      await page.setViewportSize({ width, height });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `No horizontal overflow at ${width}px.`);
+      assert.equal(await page.locator('.hero h1').isVisible(), true, `Hero heading is visible at ${width}px.`);
+      assert.equal(await page.locator('.hero-cta').isVisible(), true, `Booking action is visible at ${width}px.`);
+    }
+    await page.setViewportSize({ width: 1440, height: 960 });
+
+    await page.locator('.hero-cta').click();
+    assert.equal(await page.evaluate(() => location.hash), '#availability');
+    const availableDates = await page.locator('#availability-calendar .calendar-day.is-available').evaluateAll((days) => days.map((day) => day.dataset.date));
+    const arrival = availableDates.find((date) => {
+      const end = new Date(`${date}T00:00:00Z`);
+      end.setUTCDate(end.getUTCDate() + 3);
+      return availableDates.includes(end.toISOString().slice(0, 10));
+    });
+    assert.ok(arrival, 'There should be an available three-night range in the shown month.');
+    const departureDate = new Date(`${arrival}T00:00:00Z`);
+    departureDate.setUTCDate(departureDate.getUTCDate() + 3);
+    const departure = departureDate.toISOString().slice(0, 10);
+    await page.locator(`[data-date="${arrival}"]`).click();
+    await page.locator(`[data-date="${departure}"]`).click();
+    await page.waitForFunction(() => document.querySelector('#quote strong')?.textContent.includes('4.500.000'));
+    assert.match(await page.locator('#quote').innerText(), /3 noches/);
+    assert.match(await page.locator('#quote').innerText(), /4\.500\.000/);
+
+    for (let count = 1; count < 26; count += 1) await page.locator('[data-guest-step="1"]').click();
+    assert.equal(await page.locator('[data-guest-value]').innerText(), '26');
+    assert.equal(await page.locator('[data-guest-step="1"]').isDisabled(), true);
+    await page.locator('[data-currency="USD"]:not(:disabled)').waitFor({ timeout: 15000 });
+    await page.locator('[data-currency="USD"]').click();
+    assert.match(await page.locator('#quote').innerText(), /USD/);
+    await page.locator('#language').click();
+    assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+    assert.match(await page.locator('#quote').innerText(), /Estimated total/);
+
+    await page.route('**/api/leads', async (route) => {
+      await route.fulfill({ json: { id: 'test-request-123', quote: { arrival, departure, guests: 26, nights: 3, total: 4500000 } } });
+    });
+    await page.locator('#continue-booking').click();
+    await page.locator('#contact-step').waitFor({ state: 'visible' });
+    await page.locator('#reservation-form [name=name]').fill('Browser test');
+    await page.locator('#reservation-form [name=phone]').fill('3201234567');
+    await page.locator('#reservation-form [name=consent]').check();
+    await page.locator('#reservation-form [type=submit]').click();
+    await page.locator('#booking-success').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#form-status').innerText(), /Solicitud recibida|Request received/);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('http://localhost:3000', { waitUntil: 'domcontentloaded' });
+    await page.locator('#calendar-month-label').waitFor();
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.screenshot({ path: 'test-results/mobile-premium.png', fullPage: true });
+    assert.equal(await page.locator('#floating-whatsapp').isVisible(), true);
+    assert.equal(await page.locator('.floating-chat img').getAttribute('src'), '/assets/whatsapp-mark.svg');
+    await page.locator('#location-whatsapp').scrollIntoViewIfNeeded();
+    await page.locator('[data-space-id]').first().click();
+    await page.locator('#space-dialog').waitFor({ state: 'visible' });
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#space-dialog').isVisible(), false);
+    assert.deepEqual(errors, []);
+    console.log('PASS: premium desktop/mobile layout, image assets, location, gallery, three-night COP quote, USD and language toggles, 26-guest limit and reservation flow.');
+  } finally {
+    await browser.close();
+  }
+})().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
