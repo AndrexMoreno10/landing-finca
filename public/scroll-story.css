@@ -218,6 +218,7 @@
     border-radius: 0 0 18px 18px;
     box-shadow: 0 22px 54px #0008;
   }
+  .story-media .story-motion-toggle { top: 16px; right: 16px; bottom: auto; }
   .story-chapters {
     position: relative;
     z-index: 0;

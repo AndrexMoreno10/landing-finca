@@ -1637,3 +1637,37 @@ button:focus-visible, .button:focus-visible, .mobile-book > b:focus-visible {
 
 /* Keep the reservation progress labels legible on the dark card. */
 .reservation-card .progress-step strong { color: inherit; font-weight: 700; }
+
+/* Location: let the nearby map replace the decorative photo pair. */
+.location-gallery {
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  grid-template-rows: minmax(400px, auto);
+  gap: clamp(34px, 6vw, 82px);
+  align-items: center;
+}
+.location-copy { grid-column: 1; grid-row: 1; align-self: center; }
+.location-copy h2 { max-width: 13ch; }
+.location-copy .nearby { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.location-copy .nearby li { min-height: 78px; padding: 12px 10px; }
+.location-copy .nearby li span { line-height: 1.35; }
+.location-map {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow: 0 22px 50px #0003;
+}
+.location-map iframe { height: clamp(340px, 35vw, 480px); border-radius: 12px; }
+.location-map a { margin-top: 10px; }
+@media (max-width: 800px) {
+  .location-gallery { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; gap: 28px; }
+  .location-copy { grid-column: 1; grid-row: 1; }
+  .location-copy h2 { max-width: 18ch; }
+  .location-copy .nearby { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .location-map { grid-column: 1; grid-row: 2; }
+  .location-map iframe { height: clamp(300px, 65vw, 420px); }
+}
+@media (max-width: 440px) {
+  .location-copy .nearby { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
