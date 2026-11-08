@@ -6,7 +6,7 @@ const money=(n,currency=displayCurrency)=>{const amount=currency==='USD'&&config
 const safeGet=k=>{try{return localStorage.getItem(k)}catch{return null}},safeSet=(k,v)=>{try{localStorage.setItem(k,v)}catch{}};
 const source=Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].map(k=>[k,new URLSearchParams(location.search).get(k)||'']));
 const form=$('#reservation-form'), quick=$('#quick-form');
-function translate(){document.documentElement.lang=lang;$$('[data-es]').forEach(e=>e.innerHTML=e.dataset[lang]);$$('[data-alt-es]').forEach(e=>e.alt=e.dataset[lang==='es'?'altEs':'altEn']);$('#language').innerHTML=lang==='es'?'<span class="language-option is-active">ES</span><span class="language-divider">/</span><span class="language-option">EN</span>':'<span class="language-option">ES</span><span class="language-divider">/</span><span class="language-option is-active">EN</span>';$('#language').ariaLabel=lang==='es'?'Switch to English':'Cambiar a español';const quoteButton=$('#quick-form button');quoteButton.classList.add('quote-button');quoteButton.innerHTML='<span>'+t('Cotizar mi estadía','Get my quote')+'</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.75h7l4.25 4.3v12.2H7zM14 3.75v4.5h4.25M9.5 12h5M9.5 15.5h3M16.2 15.4l1.25 1.25 2.35-2.5"/></svg>';document.title=t('Chalet Parque del Café · Tu próxima escapada en el Quindío','Chalet Parque del Café · Your next escape in Colombia');$$('select[name="guests"] option').forEach(o=>o.textContent=o.value+' '+t(Number(o.value)===1?'persona':'personas',Number(o.value)===1?'guest':'guests'));updateQuote();loadReviews();if(config)showConfig();}
+function translate(){document.documentElement.lang=lang;$$('[data-es]').forEach(e=>e.innerHTML=e.dataset[lang]);$$('[data-alt-es]').forEach(e=>e.alt=e.dataset[lang==='es'?'altEs':'altEn']);$('#language').innerHTML=lang==='es'?'<span class="language-option is-active">ES</span><span class="language-divider">/</span><span class="language-option">EN</span>':'<span class="language-option">ES</span><span class="language-divider">/</span><span class="language-option is-active">EN</span>';$('#language').ariaLabel=lang==='es'?'Switch to English':'Cambiar a español';const quoteButton=$('#quick-form button');quoteButton.classList.add('quote-button');quoteButton.innerHTML='<span>'+t('Elegir fechas','Choose dates')+'</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M7.5 3.5v3M16.5 3.5v3M4 9.5h16"/></svg>';document.title=t('Chalet Parque del Café · Tu próxima escapada en el Quindío','Chalet Parque del Café · Your next escape in Colombia');$$('select[name="guests"] option').forEach(o=>o.textContent=o.value+' '+t(Number(o.value)===1?'persona':'personas',Number(o.value)===1?'guest':'guests'));updateQuote();loadReviews();if(config)showConfig();}
 $('#language').onclick=()=>{lang=lang==='es'?'en':'es';safeSet('chalet-language',lang);const button=$('#language');button.classList.remove('is-changing');void button.offsetWidth;button.classList.add('is-changing');button.addEventListener('animationend',()=>button.classList.remove('is-changing'),{once:true});translate()};
 document.querySelectorAll('.currency-option').forEach(button=>button.addEventListener('click',()=>{if(button.disabled)return;displayCurrency=button.dataset.currency;document.querySelectorAll('.currency-option').forEach(b=>{b.classList.toggle('is-active',b===button);b.setAttribute('aria-pressed',String(b===button))});$('#currency-attribution').hidden=displayCurrency!=='USD';renderNightlyPrice();updateQuote()}));
 function toast(msg){const e=$('#toast');e.textContent=msg;e.style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>e.style.display='none',6000)}
@@ -15,11 +15,45 @@ $('#close-modal').onclick=()=>$('#modal').close();$('#modal').onclick=e=>{if(e.t
 $$('[data-photo]').forEach(b=>b.onclick=()=>{const img=new Image();img.src=b.dataset.photo;img.alt=t('Vista del chalet','View of the chalet');modal(img)});
 function dateNow(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/Bogota',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
 function nextDay(d){return new Date(Date.parse(d)+86400000).toISOString().slice(0,10)}
-for(const f of [form,quick]){for(let n=1;n<=26;n++){const o=document.createElement('option');o.value=n;o.textContent=n+' personas';f.elements.guests.append(o)}f.elements.guests.value='10';f.elements.arrival.min=dateNow();f.elements.departure.min=nextDay(dateNow());f.elements.arrival.addEventListener('change',()=>{if(f.elements.arrival.value)f.elements.departure.min=nextDay(f.elements.arrival.value);if(f.elements.departure.value&&f.elements.departure.value<=f.elements.arrival.value)f.elements.departure.value='';if(f===form)updateQuote()});}
+for (const f of [form, quick]) {
+  const guests = f.elements.guests;
+  guests.replaceChildren();
+  for (let n = 1; n <= 26; n++) {
+    const option = document.createElement('option');
+    option.value = n;
+    option.textContent = `${n} ${t(n === 1 ? 'persona' : 'personas', n === 1 ? 'guest' : 'guests')}`;
+    guests.append(option);
+  }
+  guests.value = '1';
+  f.elements.arrival.min = dateNow();
+  f.elements.departure.min = nextDay(dateNow());
+  f.elements.arrival.addEventListener('change', () => {
+    if (f.elements.arrival.value) f.elements.departure.min = nextDay(f.elements.arrival.value);
+    if (f.elements.departure.value && f.elements.departure.value <= f.elements.arrival.value) f.elements.departure.value = '';
+    if (f === form) updateQuote();
+  });
+  const syncGuestCounter = () => {
+    const output = f.querySelector('[data-guest-value]');
+    if (output) output.textContent = guests.value;
+    const minus = f.querySelector('[data-guest-step="-1"]');
+    const plus = f.querySelector('[data-guest-step="1"]');
+    if (minus) minus.disabled = Number(guests.value) <= 1;
+    if (plus) plus.disabled = Number(guests.value) >= 26;
+  };
+  guests.addEventListener('change', syncGuestCounter);
+  f.addEventListener('click', event => {
+    const button = event.target.closest('[data-guest-step]');
+    if (!button || !f.contains(button)) return;
+    guests.value = String(Math.max(1, Math.min(26, Number(guests.value) + Number(button.dataset.guestStep))));
+    guests.dispatchEvent(new Event('input', { bubbles: true }));
+    guests.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  syncGuestCounter();
+}
 function getQuote(){const a=form.elements.arrival.value,d=form.elements.departure.value,g=Number(form.elements.guests.value);if(!a||!d)return null;const nights=(Date.parse(d)-Date.parse(a))/86400000;if(a<dateNow()||nights<1||nights>90||g<1||g>26)throw Error(t('Elige fechas futuras, entre 1 y 90 noches.','Choose future dates, between 1 and 90 nights.'));if(config?.blocks.some(b=>a<b.departure&&d>b.arrival))throw Error(t('Estas fechas no están disponibles. Prueba otro rango.','These dates are unavailable. Try another date range.'));return {arrival:a,departure:d,guests:g,nights,total:nights*1500000+(config?.cleaning||0)};}
 function updateQuote(){lastQuote=null;const e=$('#quote');try{const q=getQuote();if(!q){e.textContent=t('Selecciona tus fechas para ver el total de tu estadía.','Choose your dates to see your stay total.');return;}lastQuote=q;const days=q.nights+1;e.innerHTML=`<div class="stay-duration"><span>${days} ${t(days===1?'día':'días',days===1?'day':'days')}</span><i aria-hidden="true">·</i><span>${q.nights} ${t(q.nights===1?'noche':'noches',q.nights===1?'night':'nights')}</span></div><div><span>${money(1500000)} × ${q.nights} ${t('noches','nights')}</span><span>${money(q.nights*1500000)}</span></div>${config?.cleaning?`<div><span>${t('Aseo','Cleaning')}</span><span>${money(config.cleaning)}</span></div>`:''}<hr><div><b>${t('Total estimado','Estimated total')}</b><strong>${money(q.total)}</strong></div>${displayCurrency==='USD'?`<small>${t('Valor orientativo. El cobro se confirma en COP.','Indicative amount. Final charge is confirmed in COP.')}</small>`:''}<small>${t('Sujeto a confirmación de disponibilidad y tarifa.','Subject to availability and rate confirmation.')}</small>`;}catch(err){e.textContent=err.message;}}
 form.addEventListener('input',updateQuote);
-quick.onsubmit=e=>{e.preventDefault();['arrival','departure','guests'].forEach(k=>form.elements[k].value=quick.elements[k].value);form.elements.departure.min=nextDay(form.elements.arrival.value);updateQuote();$('#reservar').scrollIntoView({behavior:'smooth'});track('CustomizeProduct',{content_name:'Cotización de estadía'});};
+quick.onsubmit=e=>{e.preventDefault();form.elements.guests.value=quick.elements.guests.value;form.elements.guests.dispatchEvent(new Event('change',{bubbles:true}));document.querySelector('#availability-calendar').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});track('CustomizeProduct',{content_name:'Cotización de estadía'});};
 async function api(path,body){const r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});const j=await r.json();if(!r.ok)throw Error(j.error||t('No pudimos completar la solicitud.','We couldn’t complete your request.'));return j;}
 function waLink(q,id){const amount=q?`${money(q.total,'COP')}${config?.fx?` · ${t('aprox.','approx.')} ${money(q.total,'USD')}`:''}`:'';const msg=t('Hola, quiero consultar disponibilidad para el Chalet Parque del Café.','Hello, I’d like to check availability at Chalet Parque del Café.')+(q?`\n${t('Llegada','Check-in')}: ${q.arrival} ${t('desde las 2:00 p. m. (sujeto a preparación)','from 2:00 p.m. (subject to preparation)')}\n${t('Salida','Check-out')}: ${q.departure} (12:00 p. m.)\n${t('Personas','Guests')}: ${q.guests}\n${t('Total estimado en COP','Estimated total in COP')}: ${amount}`:'')+(id?`\n${t('Solicitud','Request')}: ${id}`:'');return 'https://wa.me/'+config.whatsapp+'?text='+encodeURIComponent(msg)}
 function whatsapp(q,id){if(!config?.whatsapp){toast(t('El contacto por WhatsApp estará disponible pronto. Puedes dejar tu solicitud en el formulario.','WhatsApp contact will be available soon. You can submit your request using the form.'));$('#reservar').scrollIntoView();return;}track('Contact',{content_name:'WhatsApp',...(q?{value:q.total,currency:'COP'}:{})});window.open(waLink(q,id),'_blank','noopener');}

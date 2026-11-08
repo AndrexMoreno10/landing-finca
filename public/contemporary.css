@@ -1594,3 +1594,43 @@ button:focus-visible, .button:focus-visible, .mobile-book > b:focus-visible {
   .experience-wifi-feature { grid-template-columns: 34px minmax(0, 1fr); gap: 9px; padding: 12px; }
   .experience-wifi-feature .experience-wifi-plus { display: none; }
 }
+
+/* One date source: the availability calendar. Keep quote steps synced without duplicate date pickers. */
+.booking-date-summary { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid #68462f; border-radius: 13px; background: #241812; color: #fff5e9; }
+.booking-date-summary > div { display: grid; min-width: 0; gap: 5px; }
+.booking-date-summary > div > span { color: #f2a35a; font-size: 11px; font-weight: 800; letter-spacing: .04em; }
+.booking-date-summary strong { color: #f8f0e8; font-size: 14px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.booking-date-summary strong:not(.has-selected-dates) { color: #d7c3b2; font-size: 12px; font-weight: 500; }
+.booking-date-summary a { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; padding: 8px 12px; border: 1px solid #76513a; border-radius: 999px; color: #ffc078; font-size: 11px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background-color .2s, border-color .2s; }
+.booking-date-summary a:hover { border-color: #f2a35a; background: #f2a35a18; }
+.booking-date-summary a:focus-visible { outline: 3px solid #f2a35a; outline-offset: 3px; }
+.booking-date-summary input[type="hidden"] { display: none; }
+.quick-date-summary { min-height: 68px; padding: 9px 14px; background: #241812; }
+.quick-date-summary > div > span { color: #d7c3b2; font-size: 10px; }
+.quick-date-summary strong { font-size: 13px; }
+#stay-fields .stay-dates-summary { margin: 12px 0 20px; padding: 14px 16px; }
+#stay-fields .stay-dates-summary strong { font-size: 15px; }
+.guest-picker { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 0 0 18px; padding: 16px 18px; border: 1px solid #68462f; border-radius: 13px; background: linear-gradient(120deg, #241812, #1d140f); }
+.guest-picker-heading { display: grid; gap: 4px; }
+.guest-picker-heading > span { color: #fff5e9; font-size: 14px; font-weight: 700; }
+.guest-picker-heading small { color: #cdb9a8; font-size: 11px; }
+.guest-counter { display: flex; align-items: center; gap: 12px; }
+.guest-counter button { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #76513a; border-radius: 50%; background: #f2a35a12; color: #ffc078; font-size: 22px; line-height: 1; cursor: pointer; transition: transform .18s, background-color .18s, border-color .18s; }
+.guest-counter button:hover:not(:disabled) { transform: translateY(-1px); border-color: #f2a35a; background: #f2a35a24; }
+.guest-counter button:disabled { opacity: .38; cursor: not-allowed; }
+.guest-counter button:focus-visible { outline: 3px solid #f2a35a; outline-offset: 3px; }
+.guest-counter output { min-width: 2ch; color: #f2a35a; font-size: 25px; font-weight: 800; font-variant-numeric: tabular-nums; text-align: center; }
+.guest-counter > span { margin-left: -8px; color: #d7c3b2; font-size: 12px; }
+.guest-native-select { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; clip-path: inset(50%) !important; white-space: nowrap !important; }
+@media (min-width: 721px) {
+  .hero .booking-strip form { grid-template-columns: minmax(0, 1.5fr) minmax(170px, .72fr) minmax(175px, .78fr); align-items: end; }
+}
+@media (max-width: 720px) {
+  .hero .booking-strip form { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .hero .quick-date-summary { grid-column: 1 / -1; }
+  .hero .booking-strip label { grid-column: 1; }
+  .hero .booking-strip .button { grid-column: 2; }
+  #stay-fields .stay-dates-summary { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .guest-picker { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .guest-counter { width: 100%; justify-content: space-between; }
+}

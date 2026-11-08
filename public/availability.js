@@ -12,8 +12,20 @@
   const arrivalStep=document.querySelector('#date-step-arrival'),departureStep=document.querySelector('#date-step-departure'),stepMiddle=document.querySelector('#calendar-step-middle');
   const arrivalValue=document.querySelector('#selected-arrival'),departureValue=document.querySelector('#selected-departure');
   const t=(es,en)=>lang()==='es'?es:en;
+  const summaryDate=s=>new Intl.DateTimeFormat(lang()==='es'?'es-CO':'en-US',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(fromKey(s));
   const overlaps=(a,d)=>state.blocks.some(b=>a<b.departure&&d>b.arrival);
   const visibleMonths=()=>1;
+  function syncDates(){
+    const value=state.arrival&&state.departure?`${summaryDate(state.arrival)} → ${summaryDate(state.departure)}`:state.arrival?`${summaryDate(state.arrival)} · ${t('Ahora elige la salida','Now choose check-out')}`:t('Elige llegada y salida en el calendario','Choose check-in and check-out in the calendar');
+    document.querySelectorAll('[data-selected-range]').forEach(el=>{el.textContent=value;el.classList.toggle('has-selected-dates',Boolean(state.arrival&&state.departure));});
+    [document.querySelector('#quick-form'),document.querySelector('#reservation-form')].forEach(form=>{
+      if(!form)return;
+      form.elements.arrival.value=state.arrival;
+      form.elements.departure.value=state.departure;
+      form.elements.arrival.dispatchEvent(new Event('change',{bubbles:true}));
+      form.elements.departure.dispatchEvent(new Event('change',{bubbles:true}));
+    });
+  }
   async function load(){
     const token=++state.request;state.loading=true;render();
     const start=new Date(Date.UTC(state.month.getFullYear(),state.month.getMonth(),1));
@@ -68,13 +80,14 @@
     if(!state.arrival||state.departure||value<=state.arrival){state.arrival=value;state.departure='';}
     else if(overlaps(state.arrival,value)){state.arrival=value;state.departure='';}
     else state.departure=value;
+    syncDates();
     render();
   }
-  document.querySelector('#calendar-prev').addEventListener('click',()=>{state.month=new Date(state.month.getFullYear(),state.month.getMonth()-1,1);state.arrival='';state.departure='';load()});
-  document.querySelector('#calendar-next').addEventListener('click',()=>{state.month=new Date(state.month.getFullYear(),state.month.getMonth()+1,1);state.arrival='';state.departure='';load()});
+  document.querySelector('#calendar-prev').addEventListener('click',()=>{state.month=new Date(state.month.getFullYear(),state.month.getMonth()-1,1);state.arrival='';state.departure='';syncDates();load()});
+  document.querySelector('#calendar-next').addEventListener('click',()=>{state.month=new Date(state.month.getFullYear(),state.month.getMonth()+1,1);state.arrival='';state.departure='';syncDates();load()});
   retry.addEventListener('click',load);
-  quote.addEventListener('click',()=>{if(!state.arrival||!state.departure)return;const form=document.querySelector('#reservation-form');form.elements.arrival.value=state.arrival;form.elements.departure.value=state.departure;form.elements.departure.min=state.arrival;form.elements.arrival.dispatchEvent(new Event('change',{bubbles:true}));if(matchMedia('(max-width:720px)').matches)document.querySelector('#reservar').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
-  new MutationObserver(()=>{if(state.loaded)render()}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  quote.addEventListener('click',()=>{if(!state.arrival||!state.departure)return;syncDates();document.querySelector('#reservar').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});});
+  new MutationObserver(()=>{if(state.loaded){syncDates();render()}}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   matchMedia('(max-width:720px)').addEventListener('change',load);
   load();
 })();

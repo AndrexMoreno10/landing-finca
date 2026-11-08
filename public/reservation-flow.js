@@ -50,8 +50,7 @@
     document.querySelector('#progress-contact').classList.remove('is-active');
     document.querySelector('#progress-stay').classList.add('is-active');
     document.querySelector('#progress-stay').classList.remove('is-complete');
-    stay.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
-    form.elements.arrival.focus({ preventScroll: true });
+    document.querySelector('#availability-calendar').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   });
   new MutationObserver(updateSummary).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   sync();
