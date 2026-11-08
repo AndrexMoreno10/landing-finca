@@ -1870,3 +1870,48 @@ footer > small { grid-area: copyright; width: 100%; margin-top: 18px; padding-to
   letter-spacing: 0;
 }
 .reviews #reviews-list.is-empty::before { display: none; content: none; }
+
+/* Header hue sampled from the warm chocolate brown in the provided reference. */
+.header {
+  background: #342218;
+  color: #f7eee5;
+  border-bottom-color: #6d4a32;
+  box-shadow: 0 5px 24px #0b07051c;
+}
+.header .brand, .header nav a { color: #f7eee5; }
+.header nav a:hover { color: #ffc078; }
+.header .language {
+  border-color: #8a6243;
+  background: #2b1c13;
+  color: #f7eee5;
+  box-shadow: 0 3px 12px #10090540;
+}
+.header .language-option { color: #f7eee5; }
+.header .language-option.is-active { background: #f2a35a; color: #28190f; }
+.header .language-divider { color: #f2a35a; }
+.header .language:hover,
+.header .language:focus-visible { color: #fff5e9; box-shadow: 0 5px 16px #10090555; }
+.header .button,
+.header .button.light { border-color: #f2a35a; background: #f2a35a; color: #24170f; }
+.header .button:hover { border-color: #ffc078; background: #ffc078; color: #24170f; }
+
+
+/* Honest, welcoming review state before the first guest submission. */
+.reviews #reviews-list.is-empty {
+  grid-column: 1 / -1;
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  margin: 0;
+  padding: 25px 30px;
+  border: 1px solid #493326;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #241812, #1b120e 70%);
+  color: #d9c9b9;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+}
+@media (max-width: 720px) {
+  .reviews #reviews-list.is-empty { padding: 22px 18px; font-size: 14px; }
+}
