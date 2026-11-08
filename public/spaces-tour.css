@@ -232,10 +232,6 @@
   background: #120c08;
 }
 
-.space-dialog__visual > video.is-exterior {
-  filter: contrast(1.04) saturate(1.08) brightness(1.015);
-}
-
 .space-dialog__close {
   position: absolute;
   z-index: 2;

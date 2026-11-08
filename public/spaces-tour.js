@@ -27,8 +27,7 @@
     living: {
       number: '02',
       image: '/assets/spaces/living.jpg',
-      video: '/assets/spaces/videos/living.mp4',
-      tone: 'interior',
+      video: '/assets/spaces/videos/living.mp4?v=2',
       title: { es: 'Sala de estar', en: 'Living room' },
       description: {
         es: 'Un espacio amplio y familiar para reunirse, conversar y descansar.',
@@ -39,8 +38,7 @@
     bedrooms: {
       number: '03',
       image: '/assets/spaces/bedrooms.jpg',
-      video: '/assets/spaces/videos/bedrooms.mp4',
-      tone: 'interior',
+      video: '/assets/spaces/videos/bedrooms.mp4?v=2',
       title: { es: 'Habitaciones', en: 'Bedrooms' },
       description: {
         es: 'La finca cuenta con cinco habitaciones para descansar en grupo.',
@@ -52,7 +50,6 @@
       number: '04',
       image: '/assets/spaces/games.jpg',
       video: '/assets/spaces/videos/games.mp4',
-      tone: 'exterior',
       title: { es: 'Zona de juegos', en: 'Games area' },
       description: {
         es: 'Ping pong, bolirana y juegos de mesa para compartir en familia o con amigos.',
@@ -64,7 +61,6 @@
       number: '05',
       image: '/assets/spaces/parking.jpg',
       video: '/assets/spaces/videos/parking.mp4',
-      tone: 'exterior',
       title: { es: 'Parqueadero', en: 'Parking' },
       description: {
         es: 'Espacio de parqueadero junto al chalet, con una llegada directa a la casa.',
@@ -75,8 +71,7 @@
     barbecue: {
       number: '06',
       image: '/assets/spaces/barbecue.jpg',
-      video: '/assets/spaces/videos/barbecue.mp4',
-      tone: 'exterior',
+      video: '/assets/spaces/videos/barbecue.mp4?v=2',
       title: { es: 'Asador de barril', en: 'Barrel barbecue' },
       description: {
         es: 'El asador está en la terraza, junto a la piscina y al paisaje.',
@@ -94,7 +89,6 @@
       dialogVideo.src = space.video;
       dialogVideo.load();
     }
-    dialogVideo.classList.toggle('is-exterior', space.tone === 'exterior');
     visual.style.setProperty('--space-dialog-image', 'url("' + space.image + '")');
     title.textContent = space.title[lang];
     description.textContent = space.description[lang];
