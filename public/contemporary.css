@@ -2038,9 +2038,9 @@ footer > small { grid-area: copyright; width: 100%; margin-top: 18px; padding-to
 /* Lift the location marker back into the upper photo composition. */
 .hero-content { top: clamp(100px, 18%, 160px); bottom: auto; }
 @media (max-width: 720px) {
-  .hero-content { top: 52%; bottom: auto; }
+  .hero-content { top: 36%; bottom: auto; }
 }
-@media (max-width: 380px) { .hero-content { top: 50%; bottom: auto; } }
+@media (max-width: 380px) { .hero-content { top: 34%; bottom: auto; } }
 
 /* Review section layout, ready for the real guest comments. */
 .reviews-preview {
