@@ -7,3 +7,7 @@ review-deploy
 *.log
 SESSION_CONTEXT.md
 WORKING_PREFERENCES.md
+.taste-skill/
+VIDEO_STORY_CONTEXT.md
+public/assets/story/story-games.*
+public/assets/story/story-grill.*
