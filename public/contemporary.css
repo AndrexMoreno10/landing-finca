@@ -1749,3 +1749,48 @@ button:focus-visible, .button:focus-visible, .mobile-book > b:focus-visible {
   .experience-stats > div, .experience-route-stop, .route-pin, .experience-wifi-feature, .experience-wifi-feature .experience-wifi-icon { transition: none; animation: none; }
   .amenities.motion-ready .experience-stats > div, .amenities.motion-ready .experience-route-stop { opacity: 1; transform: none; }
 }
+
+/* Match the left feature column to the capacity widget's height. */
+.amenities .section-heading { align-items: stretch; }
+.amenities .section-heading > div:first-child { display: flex; flex-direction: column; justify-content: space-between; }
+.amenities .section-heading h2 { max-width: 15ch; font-size: clamp(40px, 4vw, 54px); line-height: 1.03; }
+.amenities .section-heading h2 em { display: block; color: #f2a35a; font-style: normal; }
+.experience-wifi-feature { width: 100%; max-width: none; margin-top: 20px; }
+.experience-stats { max-width: none; height: 100%; min-height: 205px; align-self: stretch; align-content: center; }
+@media (max-width: 1000px) {
+  .amenities .section-heading { align-items: stretch; }
+  .amenities .section-heading > div:first-child { min-height: 0; }
+  .experience-stats { min-height: 190px; }
+}
+@media (max-width: 720px) {
+  .amenities .section-heading { gap: 24px; }
+  .amenities .section-heading h2 { max-width: 15ch; font-size: clamp(38px, 9vw, 48px); }
+  .experience-stats { min-height: 180px; }
+}
+
+/* Replace the removed in-page map with one clear footer directions link. */
+.footer-location {
+  display: flex;
+  width: min(100%, 540px);
+  min-height: 74px;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin: 30px auto 24px;
+  padding: 12px 14px;
+  border: 1px solid #68462f;
+  border-radius: 16px;
+  background: linear-gradient(115deg, #241812, #1b120e);
+  text-align: left;
+}
+.footer-location-icon { display: grid; flex: 0 0 40px; width: 40px; height: 40px; place-items: center; border: 1px solid #f2a35a65; border-radius: 50%; background: #f2a35a12; color: #ffc078; }
+.footer-location-icon svg { width: 21px; height: 21px; }
+.footer-location-place { color: #eee0d2; font-size: 13px; font-weight: 600; }
+.footer-location-link { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 8px; margin-left: auto; padding: 9px 14px; border: 1px solid #f2a35a; border-radius: 999px; background: #f2a35a; color: #160f0b; font-size: 12px; font-weight: 700; white-space: nowrap; transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease; }
+.footer-location-link:hover { transform: translateY(-2px); background: #ffb86f; box-shadow: 0 8px 20px #f2a35a2b; }
+.footer-location-link:focus-visible { outline: 3px solid #f2a35a; outline-offset: 4px; }
+.footer-location-link svg { width: 16px; height: 16px; }
+@media (max-width: 520px) {
+  .footer-location { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 10px 12px; margin: 24px auto 20px; padding: 13px; }
+  .footer-location-link { grid-column: 1 / -1; width: 100%; margin: 0; }
+}

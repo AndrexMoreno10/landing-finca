@@ -27,10 +27,11 @@
     });
   };
 
+  const revealTarget = section.querySelector('.section-heading') || section;
   const observer = new IntersectionObserver(entries => {
     if (!entries.some(entry => entry.isIntersecting)) return;
     reveal();
     observer.disconnect();
-  }, { threshold: 0.18 });
-  observer.observe(section);
+  }, { threshold: 0.12 });
+  observer.observe(revealTarget);
 })();
