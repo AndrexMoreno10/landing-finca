@@ -19,6 +19,16 @@
 
   const activeVideos = () => mobileLayout.matches ? mobileVideos : desktopVideos;
 
+  allVideos.forEach(video => {
+    const stopAt = Number(video.dataset.stopAt);
+    if (!Number.isFinite(stopAt) || stopAt <= 0) return;
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime < stopAt) return;
+      video.pause();
+      video.currentTime = stopAt;
+    });
+  });
+
   const updateMotion = () => {
     const activeSet = activeVideos();
     allVideos.forEach(video => {
@@ -51,6 +61,7 @@
     desktopVideos[activeIndex].classList.add('is-active');
     const poster = desktopVideos[activeIndex].getAttribute('poster');
     if (ambient && poster) ambient.style.setProperty('--story-poster', `url("${poster}")`);
+    story.style.setProperty('--story-progress', `${((activeIndex + 1) / chapters.length) * 100}%`);
     const current = String(activeIndex + 1).padStart(2, '0');
     const total = String(chapters.length).padStart(2, '0');
     if (status) status.textContent = document.documentElement.lang === 'en'
@@ -88,5 +99,6 @@
   new MutationObserver(updateMotion).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 
   story.dataset.storyReady = 'true';
+  story.style.setProperty('--story-progress', `${100 / chapters.length}%`);
   updateMotion();
 })();
