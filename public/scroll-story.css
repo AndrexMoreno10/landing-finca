@@ -81,8 +81,6 @@
 }
 
 .story-video.is-active { opacity: 1; transform: scale(1); }
-.story-video--exterior { filter: saturate(1.22) contrast(1.055) brightness(1.035); }
-
 .story-location {
   position: absolute;
   z-index: 3;
