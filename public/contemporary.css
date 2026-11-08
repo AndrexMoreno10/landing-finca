@@ -1671,3 +1671,81 @@ button:focus-visible, .button:focus-visible, .mobile-book > b:focus-visible {
 @media (max-width: 440px) {
   .location-copy .nearby { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Nearby distances turn the empty gap into a single animated travel rail. */
+.experience-route {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 34px 0 0;
+  padding: 17px 0 0;
+  border-top: 1px solid #76513a;
+}
+.experience-route-stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 72px;
+  padding: 4px 18px;
+  border-right: 1px solid #76513a65;
+  transition: opacity .55s ease, transform .65s cubic-bezier(.2,.8,.2,1), background-color .22s ease;
+}
+.experience-route-stop:last-child { border-right: 0; }
+.route-pin {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid #f2a35a68;
+  border-radius: 50%;
+  background: #f2a35a12;
+  color: #ffc078;
+  transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+}
+.route-pin svg { width: 20px; height: 20px; }
+.experience-route-stop:hover .route-pin { transform: translateY(-2px) scale(1.06); background: #f2a35a22; box-shadow: 0 8px 18px #f2a35a20; }
+.route-copy { display: grid; min-width: 0; gap: 3px; }
+.route-copy > span { overflow: hidden; color: #cdb9a8; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.route-copy strong { display: flex; align-items: baseline; gap: 5px; color: #ffc078; font-size: 22px; font-variant-numeric: tabular-nums; line-height: 1; }
+.route-copy strong small { color: #e5d5c6; font-size: 11px; font-weight: 500; }
+.experience-route-stop.is-featured .route-pin { border-color: #f2a35a; background: #f2a35a20; }
+.experience-stats > div { border: 1px solid transparent; border-radius: 13px; transition: transform .25s ease, border-color .25s ease, background-color .25s ease, opacity .55s ease; }
+.experience-stats > div:hover { transform: translateY(-3px); border-color: #f2a35a65; background: #f2a35a0b; }
+.experience-wifi-feature { transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease; }
+.experience-wifi-feature:hover { transform: translateY(-2px); border-color: #f2a35a; box-shadow: 0 12px 28px #10090550; }
+.experience-wifi-feature .experience-wifi-icon { animation: wifi-soft-pulse 3s ease-in-out infinite; }
+@keyframes wifi-soft-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 #f2a35a00; }
+  50% { box-shadow: 0 0 0 5px #f2a35a10; }
+}
+.amenities.motion-ready .experience-stats > div,
+.amenities.motion-ready .experience-route-stop { opacity: 0; transform: translateY(14px); }
+.amenities.motion-ready.motion-visible .experience-stats > div,
+.amenities.motion-ready.motion-visible .experience-route-stop { opacity: 1; transform: translateY(0); }
+.amenities.motion-ready.motion-visible .experience-stats > div:nth-child(2),
+.amenities.motion-ready.motion-visible .experience-route-stop:nth-child(2) { transition-delay: .08s; }
+.amenities.motion-ready.motion-visible .experience-stats > div:nth-child(3),
+.amenities.motion-ready.motion-visible .experience-route-stop:nth-child(3) { transition-delay: .16s; }
+.amenities.motion-ready.motion-visible .experience-route-stop:nth-child(4) { transition-delay: .24s; }
+.amenities.motion-visible .experience-stats > div { animation: metric-arrive .72s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes metric-arrive { from { transform: translateY(12px) scale(.97); } to { transform: translateY(0) scale(1); } }
+@media (max-width: 1000px) {
+  .experience-route { margin-top: 28px; }
+  .experience-route-stop { padding-inline: 12px; }
+}
+@media (max-width: 560px) {
+  .experience-route { grid-template-columns: 1fr; gap: 0; margin-top: 24px; padding-top: 8px; }
+  .experience-route-stop { grid-template-columns: 38px minmax(0,1fr); min-height: 62px; padding: 8px 4px; border-right: 0; border-bottom: 1px solid #76513a55; }
+  .experience-route-stop:last-child { border-bottom: 0; }
+  .route-copy { grid-template-columns: minmax(0,1fr) auto; align-items: center; }
+  .route-copy > span { white-space: normal; }
+  .experience-route-stop:hover .route-pin { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience-stats > div, .experience-route-stop, .route-pin, .experience-wifi-feature, .experience-wifi-feature .experience-wifi-icon { transition: none; animation: none; }
+  .amenities.motion-ready .experience-stats > div, .amenities.motion-ready .experience-route-stop { opacity: 1; transform: none; }
+}
