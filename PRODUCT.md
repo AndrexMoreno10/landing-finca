@@ -28,7 +28,7 @@ The website presents factual property details, photos, location, availability, a
 
 ## Brand Commitments
 
-Product name: Chalet Parque del Café. The user wants visitors to associate the stay with rest, nature, spacious accommodation, and proximity to Parque del Café. Preserve the current visual identity.
+Product name: Chalet Giraldo. The user wants visitors to associate the stay with rest, nature, spacious accommodation, and proximity to Parque del Café. Preserve the current visual identity.
 
 ## Evidence on Hand
 
