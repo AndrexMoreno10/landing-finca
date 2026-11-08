@@ -2038,9 +2038,9 @@ footer > small { grid-area: copyright; width: 100%; margin-top: 18px; padding-to
 /* Lift the location marker back into the upper photo composition. */
 .hero-content { top: clamp(100px, 18%, 160px); bottom: auto; }
 @media (max-width: 720px) {
-  .hero-content { top: 36%; bottom: auto; }
+  .hero-content { top: 28%; bottom: auto; }
 }
-@media (max-width: 380px) { .hero-content { top: 34%; bottom: auto; } }
+@media (max-width: 380px) { .hero-content { top: 26%; bottom: auto; } }
 
 /* Review section layout, ready for the real guest comments. */
 .reviews-preview {
@@ -2079,53 +2079,58 @@ footer > small { grid-area: copyright; width: 100%; margin-top: 18px; padding-to
 @media (prefers-reduced-motion: reduce) { .review-preview-card { scroll-behavior: auto; } }
 
 
-/* Single-line mobile header: brand, compact navigation and language switch. */
+/* Minimal mobile header: centered two-line brand with language switch. */
 @media (max-width: 720px) {
   .header {
     display: flex;
-    height: 68px;
-    min-height: 68px;
+    height: 72px;
+    min-height: 72px;
     flex-wrap: nowrap;
     justify-content: space-between;
-    gap: 8px;
-    padding: 0 14px;
+    gap: 12px;
+    padding: 0 18px;
   }
-  .header .brand { flex: 0 0 auto; gap: 0; font-size: 0; line-height: 1; }
-  .header .brand-icon { display: none; }
+  .header .brand {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    font-size: 0;
+    line-height: 1;
+  }
+  .header .brand-icon { display: grid; width: 34px; height: 36px; }
+  .header .brand-icon svg { width: 32px; height: 32px; }
   .header .brand > span:last-child {
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: center;
     gap: 3px;
     color: #f7eee5;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 800;
+    line-height: 1;
     letter-spacing: -.02em;
     white-space: nowrap;
   }
-  .header .brand small { display: inline; margin: 0; color: #f7eee5; font-size: 8px; letter-spacing: .09em; }
-  .header nav {
-    display: flex;
-    order: 0;
-    flex: 1 1 auto;
-    width: auto;
-    min-width: 0;
-    justify-content: center;
-    gap: clamp(5px, 1.5vw, 10px);
+  .header .brand small {
+    display: block;
     margin: 0;
-    font-size: 10px;
-    white-space: nowrap;
+    color: #f7eee5;
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: .16em;
   }
-  .header nav a { font-size: inherit; line-height: 1; }
+  .header nav { display: none !important; }
   .header-actions { display: flex; flex: 0 0 auto; gap: 0; }
   .header-actions .button { display: none; }
-  .header .language { min-height: 32px; padding: 3px; font-size: 10px; }
-  .header .language-option { min-height: 24px; padding: 0 5px; }
+  .header .language { min-height: 34px; padding: 3px; font-size: 10px; }
+  .header .language-option { min-height: 25px; padding: 0 5px; }
 }
 @media (max-width: 380px) {
-  .header { gap: 5px; padding-inline: 9px; }
-  .header .brand > span:last-child { gap: 2px; font-size: 10px; }
+  .header { padding-inline: 14px; }
+  .header .brand { gap: 6px; }
+  .header .brand-icon { width: 31px; flex-basis: 31px; }
+  .header .brand-icon svg { width: 29px; height: 29px; }
+  .header .brand > span:last-child { font-size: 12px; }
   .header .brand small { font-size: 7px; }
-  .header nav { gap: 4px; font-size: 8px; }
-  .header .language { min-height: 29px; font-size: 9px; }
-  .header .language-option { min-height: 21px; padding-inline: 4px; }
 }
