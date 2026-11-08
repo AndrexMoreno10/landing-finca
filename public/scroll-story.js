@@ -4,22 +4,22 @@
 
   const chapters = [...story.querySelectorAll('[data-story-chapter]')];
   const desktopVideos = [...story.querySelectorAll('[data-story-video]')];
-  const mobileVideos = [...story.querySelectorAll('[data-story-mobile-video]')];
   const ambient = story.querySelector('.story-ambient');
   const toggles = [...story.querySelectorAll('.story-motion-toggle')];
   const status = story.querySelector('.story-status');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const mobileLayout = matchMedia('(max-width: 720px)');
-  const allVideos = [...desktopVideos, ...mobileVideos];
-  if (!chapters.length || desktopVideos.length !== chapters.length || mobileVideos.length !== chapters.length) return;
+  if (!chapters.length || desktopVideos.length !== chapters.length) return;
+
+  const syncStickyOffset = () => {
+    const headerHeight = document.querySelector('.header')?.getBoundingClientRect().height || 76;
+    story.style.setProperty('--story-sticky-top', `${Math.round(headerHeight)}px`);
+  };
+  syncStickyOffset();
 
   let activeIndex = 0;
   let inView = false;
   let manuallyPaused = reducedMotion.matches;
-
-  const activeVideos = () => mobileLayout.matches ? mobileVideos : desktopVideos;
-
-  allVideos.forEach(video => {
+  desktopVideos.forEach(video => {
     const stopAt = Number(video.dataset.stopAt);
     if (!Number.isFinite(stopAt) || stopAt <= 0) return;
     video.addEventListener('timeupdate', () => {
@@ -30,9 +30,8 @@
   });
 
   const updateMotion = () => {
-    const activeSet = activeVideos();
-    allVideos.forEach(video => {
-      if (video !== activeSet[activeIndex] || !inView || manuallyPaused || document.hidden) {
+    desktopVideos.forEach(video => {
+      if (video !== desktopVideos[activeIndex] || !inView || manuallyPaused || document.hidden) {
         video.pause();
       } else {
         video.play().catch(() => {});
@@ -91,11 +90,11 @@
   visibilityObserver.observe(story);
 
   document.addEventListener('visibilitychange', updateMotion);
+  window.addEventListener('resize', syncStickyOffset, { passive: true });
   reducedMotion.addEventListener('change', event => {
     manuallyPaused = event.matches;
     updateMotion();
   });
-  mobileLayout.addEventListener('change', updateMotion);
   new MutationObserver(updateMotion).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 
   story.dataset.storyReady = 'true';
