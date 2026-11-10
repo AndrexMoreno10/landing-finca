@@ -70,7 +70,7 @@
     },
     barbecue: {
       number: '06',
-      image: '/assets/spaces/covers/barbecue.webp',
+      image: '/assets/spaces/barbecue.jpg',
       video: '/assets/spaces/videos/barbecue.mp4?v=2',
       title: { es: 'Asador de barril', en: 'Barrel barbecue' },
       description: {

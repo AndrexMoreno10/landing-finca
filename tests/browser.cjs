@@ -16,12 +16,27 @@ require('node:fs').mkdirSync('test-results', { recursive: true });
     await page.locator('#availability-calendar .calendar-day.is-available').first().waitFor({ timeout: 10000 });
     await page.locator('img').evaluateAll((images) => images.forEach((image) => { image.loading = 'eager'; }));
     await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => image.decode().catch(() => null))));
-    assert.equal(await page.locator('.spaces-reel').count(), 0);
+    assert.equal(await page.locator('.spaces-reel').count(), 1);
+    await page.locator('.spaces-reel').scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => document.querySelector('[data-spaces-reel-video]')?.currentSrc.includes('finca-reel.mp4'));
+    const reelVideo = page.locator('[data-spaces-reel-video]');
+    await page.waitForFunction(() => document.querySelector('[data-spaces-reel-video]')?.readyState >= 2, null, { timeout: 15000 });
+    await page.locator('[data-reel-toggle]').click();
+    await page.waitForFunction(() => document.querySelector('[data-spaces-reel-video]')?.paused);
+    await page.locator('[data-reel-toggle]').click();
+    await page.waitForFunction(() => !document.querySelector('[data-spaces-reel-video]')?.paused);
+    await page.locator('[data-reel-audio]').click();
+    assert.equal(await reelVideo.evaluate(video => video.muted), false);
+    await page.locator('[data-reel-audio]').click();
+    assert.equal(await reelVideo.evaluate(video => video.muted), true);
+    const barbecueBounds = await page.locator('[data-space-id="barbecue"]').boundingBox();
+    const poolBounds = await page.locator('[data-space-id="pool"]').boundingBox();
+    assert.ok(barbecueBounds.width * barbecueBounds.height > poolBounds.width * poolBounds.height * 2, 'Barbecue should be the visual focal card; pool should stay secondary.');
     assert.equal(await page.locator('#recuerdos').count(), 0);
-    for (const [space, cover] of [['pool', 'pool'], ['games', 'games'], ['barbecue', 'barbecue']]) {
+    for (const [space, poster] of [['pool', '/assets/spaces/covers/pool.webp'], ['games', '/assets/spaces/covers/games.webp'], ['barbecue', '/assets/spaces/barbecue.jpg']]) {
       await page.locator(`[data-space-id="${space}"]`).click();
       await page.locator('#space-dialog').waitFor({ state: 'visible' });
-      assert.equal(await page.locator('[data-space-dialog-video]').getAttribute('poster'), `/assets/spaces/covers/${cover}.webp`);
+      assert.equal(await page.locator('[data-space-dialog-video]').getAttribute('poster'), poster);
       assert.match(await page.locator('[data-space-dialog-video]').getAttribute('src'), new RegExp(`/videos/${space}\\.mp4`));
       await page.locator('[data-space-close]').click();
     }
