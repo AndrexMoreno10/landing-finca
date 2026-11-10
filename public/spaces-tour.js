@@ -14,7 +14,7 @@
   const spaces = {
     pool: {
       number: '01',
-      image: '/assets/spaces/pool.webp',
+      image: '/assets/spaces/covers/pool.webp',
       video: '/assets/spaces/videos/pool.mp4',
       tone: 'exterior',
       title: { es: 'Piscina y terraza', en: 'Pool and terrace' },
@@ -48,7 +48,7 @@
     },
     games: {
       number: '04',
-      image: '/assets/spaces/games.jpg',
+      image: '/assets/spaces/covers/games.webp',
       video: '/assets/spaces/videos/games.mp4',
       title: { es: 'Zona de juegos', en: 'Games area' },
       description: {
@@ -70,7 +70,7 @@
     },
     barbecue: {
       number: '06',
-      image: '/assets/spaces/barbecue.jpg',
+      image: '/assets/spaces/covers/barbecue.webp',
       video: '/assets/spaces/videos/barbecue.mp4?v=2',
       title: { es: 'Asador de barril', en: 'Barrel barbecue' },
       description: {

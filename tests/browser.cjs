@@ -16,19 +16,15 @@ require('node:fs').mkdirSync('test-results', { recursive: true });
     await page.locator('#availability-calendar .calendar-day.is-available').first().waitFor({ timeout: 10000 });
     await page.locator('img').evaluateAll((images) => images.forEach((image) => { image.loading = 'eager'; }));
     await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => image.decode().catch(() => null))));
-    await page.locator('.spaces-reel').scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => {
-      const video = document.querySelector('[data-spaces-reel-video]');
-      return video?.currentTime > 0;
-    }, null, { timeout: 15000 });
-    assert.match(await page.locator('[data-spaces-reel-video]').getAttribute('src'), /finca-reel\.mp4$/);
-    await page.locator('[data-reel-toggle]').click();
-    await page.waitForFunction(() => document.querySelector('[data-spaces-reel-video]').paused);
-    await page.locator('[data-reel-toggle]').click();
-    await page.waitForFunction(() => !document.querySelector('[data-spaces-reel-video]').paused);
-    await page.locator('[data-reel-audio]').click();
-    assert.equal(await page.locator('[data-spaces-reel-video]').evaluate((video) => video.muted), false);
-    await page.locator('[data-reel-audio]').click();
+    assert.equal(await page.locator('.spaces-reel').count(), 0);
+    assert.equal(await page.locator('#recuerdos').count(), 0);
+    for (const [space, cover] of [['pool', 'pool'], ['games', 'games'], ['barbecue', 'barbecue']]) {
+      await page.locator(`[data-space-id="${space}"]`).click();
+      await page.locator('#space-dialog').waitFor({ state: 'visible' });
+      assert.equal(await page.locator('[data-space-dialog-video]').getAttribute('poster'), `/assets/spaces/covers/${cover}.webp`);
+      assert.match(await page.locator('[data-space-dialog-video]').getAttribute('src'), new RegExp(`/videos/${space}\\.mp4`));
+      await page.locator('[data-space-close]').click();
+    }
     for (const card of await page.locator('[data-space-id]').all()) {
       await card.scrollIntoViewIfNeeded();
       await page.waitForTimeout(80);
@@ -43,7 +39,7 @@ require('node:fs').mkdirSync('test-results', { recursive: true });
     assert.equal(await page.locator('[data-space-id].is-visible').count(), 6);
     assert.equal(await page.locator('.space-card > img').evaluateAll((images) => images.every((image) => getComputedStyle(image).objectFit === 'cover')), true);
     assert.equal(await page.locator('#ubicacion .location-distance').count(), 3);
-    assert.equal(await page.locator('#recuerdos .premium-gallery-grid article').count(), 4);
+    assert.equal(await page.locator('#recuerdos').count(), 0);
     await page.screenshot({ path: 'test-results/desktop-premium.png', fullPage: true });
     for (const [width, height] of [[1280, 800], [768, 1024], [390, 844], [360, 800]]) {
       await page.setViewportSize({ width, height });
@@ -96,14 +92,11 @@ require('node:fs').mkdirSync('test-results', { recursive: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('http://localhost:3000', { waitUntil: 'domcontentloaded' });
     await page.locator('#calendar-month-label').waitFor();
-    await page.locator('.spaces-reel').scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => document.querySelector('[data-spaces-reel-video]')?.currentTime > 0, null, { timeout: 15000 });
-    assert.equal(await page.locator('.spaces-reel').evaluate((reel) => reel.getBoundingClientRect().width > 300), true);
     for (const card of await page.locator('[data-space-id]').all()) {
       await card.scrollIntoViewIfNeeded();
       await page.waitForTimeout(80);
     }
-    await page.locator('#recuerdos').scrollIntoViewIfNeeded();
+    await page.locator('#ubicacion').scrollIntoViewIfNeeded();
     await page.waitForTimeout(500);
     await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => image.decode().catch(() => null))));
     await page.evaluate(() => window.scrollTo(0, 0));
@@ -118,7 +111,7 @@ require('node:fs').mkdirSync('test-results', { recursive: true });
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('#space-dialog').isVisible(), false);
     assert.deepEqual(errors, []);
-    console.log('PASS: premium desktop/mobile layout, image assets, location, gallery, three-night COP quote, USD and language toggles, 26-guest limit and reservation flow.');
+    console.log('PASS: responsive spaces covers open their matching videos, location routes render, duplicate gallery is removed, and reservation flow remains functional.');
   } finally {
     await browser.close();
   }
