@@ -84,6 +84,13 @@
   transition: transform .7s cubic-bezier(.2,.7,.2,1);
 }
 
+/* These source photos are portrait frames; keep each room or amenity as the focal point. */
+.space-card[data-space-id="living"] > img { object-position: center 53%; }
+.space-card[data-space-id="bedrooms"] > img { object-position: center 63%; }
+.space-card[data-space-id="games"] > img { object-position: center 64%; }
+.space-card[data-space-id="parking"] > img { object-position: center 66%; }
+.space-card[data-space-id="barbecue"] > img { object-position: center 52%; }
+
 .space-card::after {
   position: absolute;
   z-index: -1;

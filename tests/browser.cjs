@@ -16,9 +16,19 @@ require('node:fs').mkdirSync('test-results', { recursive: true });
     await page.locator('#availability-calendar .calendar-day.is-available').first().waitFor({ timeout: 10000 });
     await page.locator('img').evaluateAll((images) => images.forEach((image) => { image.loading = 'eager'; }));
     await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => image.decode().catch(() => null))));
+    for (const card of await page.locator('[data-space-id]').all()) {
+      await card.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(80);
+    }
+    await page.locator('#ubicacion').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1200);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(150);
 
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     assert.equal(await page.locator('img').evaluateAll((images) => images.every((image) => image.complete && image.naturalWidth > 0)), true);
+    assert.equal(await page.locator('[data-space-id].is-visible').count(), 6);
+    assert.equal(await page.locator('.space-card > img').evaluateAll((images) => images.every((image) => getComputedStyle(image).objectFit === 'cover')), true);
     assert.equal(await page.locator('#ubicacion .location-distance').count(), 3);
     assert.equal(await page.locator('#recuerdos .premium-gallery-grid article').count(), 4);
     await page.screenshot({ path: 'test-results/desktop-premium.png', fullPage: true });
@@ -73,6 +83,15 @@ require('node:fs').mkdirSync('test-results', { recursive: true });
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('http://localhost:3000', { waitUntil: 'domcontentloaded' });
     await page.locator('#calendar-month-label').waitFor();
+    for (const card of await page.locator('[data-space-id]').all()) {
+      await card.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(80);
+    }
+    await page.locator('#recuerdos').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(500);
+    await page.locator('img').evaluateAll((images) => Promise.all(images.map((image) => image.decode().catch(() => null))));
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(150);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await page.screenshot({ path: 'test-results/mobile-premium.png', fullPage: true });
     assert.equal(await page.locator('#floating-whatsapp').isVisible(), true);
