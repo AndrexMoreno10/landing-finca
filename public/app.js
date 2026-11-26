@@ -92,6 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
     duplicate.classList.add('experience-ticker__group');
     duplicate.setAttribute('aria-hidden', 'true');
     duplicate.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+    for (const tickerGroup of [group, duplicate]) {
+      const wifi = tickerGroup.querySelector('.experience-wifi-feature');
+      const stats = tickerGroup.querySelector('.experience-stats');
+      if (!wifi || !stats) continue;
+      const facts = document.createElement('div');
+      facts.className = 'experience-facts-pill';
+      stats.insertAdjacentElement('beforebegin', facts);
+      facts.append(wifi, stats);
+    }
     track.append(group, duplicate);
     experience.append(track);
   }
