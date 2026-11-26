@@ -27,7 +27,7 @@
     living: {
       number: '02',
       image: '/assets/spaces/living.jpg',
-      video: '/assets/spaces/videos/living.mp4?v=2',
+      video: '/assets/spaces/videos/living-v3.mp4',
       title: { es: 'Sala de estar', en: 'Living room' },
       description: {
         es: 'Un espacio amplio y familiar para reunirse, conversar y descansar.',
