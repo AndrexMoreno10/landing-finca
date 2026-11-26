@@ -81,5 +81,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (main && hero && availability && hero.nextElementSibling !== availability) {
     hero.insertAdjacentElement('afterend', availability);
   }
+
+  const experience = document.querySelector('#experiencias');
+  const group = experience?.querySelector('.section-heading');
+  if (experience && group && !experience.querySelector('.experience-ticker__track')) {
+    const track = document.createElement('div');
+    const duplicate = group.cloneNode(true);
+    track.className = 'experience-ticker__track';
+    group.classList.add('experience-ticker__group');
+    duplicate.classList.add('experience-ticker__group');
+    duplicate.setAttribute('aria-hidden', 'true');
+    duplicate.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+    track.append(group, duplicate);
+    experience.append(track);
+  }
 });
 

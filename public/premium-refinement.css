@@ -444,3 +444,111 @@ footer .brand { font-family: var(--premium-display); }
   .premium-gallery-grid article:hover,
   .premium-gallery-grid article:hover .experience-visual img { transform: none; }
 }
+
+/* Compact moving facts ribbon. */
+#experiencias.amenities {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 0;
+  background: var(--premium-coffee-raised);
+}
+#experiencias.amenities::before,
+#experiencias.amenities::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: clamp(28px, 6vw, 100px);
+  pointer-events: none;
+}
+#experiencias.amenities::before { left: 0; background: linear-gradient(90deg, var(--premium-coffee-raised), transparent); }
+#experiencias.amenities::after { right: 0; background: linear-gradient(-90deg, var(--premium-coffee-raised), transparent); }
+.experience-ticker__track {
+  display: flex;
+  width: max-content;
+  animation: experience-ticker 34s linear infinite;
+  will-change: transform;
+}
+#experiencias:hover .experience-ticker__track,
+#experiencias:focus-within .experience-ticker__track { animation-play-state: paused; }
+#experiencias .experience-ticker__group {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 36px;
+  padding: 0 18px;
+}
+#experiencias .experience-ticker__group > div:first-child {
+  display: flex;
+  min-height: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+}
+#experiencias .section-heading h2 {
+  width: max-content;
+  max-width: none;
+  margin: 0;
+  font-size: clamp(26px, 2.6vw, 38px);
+  white-space: nowrap;
+}
+#experiencias .section-heading h2 em { display: inline; }
+#experiencias .experience-wifi-feature {
+  width: max-content;
+  min-height: 64px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 999px;
+}
+#experiencias .experience-wifi-description { display: none; }
+#experiencias .experience-stats {
+  display: flex;
+  width: max-content;
+  min-height: 0;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 8px;
+  border-radius: 999px;
+  box-shadow: none;
+}
+#experiencias .experience-stats > div {
+  display: grid;
+  min-width: 142px;
+  min-height: 64px;
+  grid-template-columns: 25px auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  column-gap: 9px;
+  padding: 7px 18px;
+  text-align: left;
+}
+#experiencias .experience-stats .capacity-icon {
+  grid-row: 1 / span 2;
+  align-self: center;
+  width: 23px;
+  height: 23px;
+  margin: 0;
+}
+#experiencias .experience-stats strong { font-size: 28px; line-height: .9; }
+#experiencias .experience-stats span { font-size: 11px; }
+@keyframes experience-ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@media (max-width: 720px) {
+  #experiencias.amenities { padding: 13px 0; }
+  #experiencias .experience-ticker__group { gap: 22px; padding-inline: 11px; }
+  #experiencias .experience-ticker__group > div:first-child { gap: 18px; }
+  #experiencias .section-heading h2 { font-size: 27px; }
+  #experiencias .experience-wifi-feature { min-height: 56px; padding: 8px 12px; }
+  #experiencias .experience-stats { min-height: 0; padding: 6px; }
+  #experiencias .experience-stats > div { min-width: 118px; min-height: 56px; padding: 6px 12px; }
+  #experiencias .experience-stats strong { font-size: 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience-ticker__track { width: 100%; animation: none; }
+  #experiencias .experience-ticker__group { width: 100%; overflow-x: auto; }
+  #experiencias .experience-ticker__group[aria-hidden='true'] { display: none; }
+}
