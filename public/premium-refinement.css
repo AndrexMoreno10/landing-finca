@@ -15,6 +15,130 @@
   --premium-section-pad: clamp(70px, 8vw, 116px);
 }
 
+/* Coffee-region conversion palette: bright, botanical and recognisably Colombian. */
+:root {
+  --premium-coffee: #123f2d;
+  --premium-coffee-raised: #185239;
+  --premium-gold: #ffc83d;
+  --premium-sand: #f7f1df;
+  --premium-sand-ink: #153c2b;
+  --premium-sand-muted: #536a5b;
+}
+
+body { background: #f7f1df; }
+.header { background: #103b2bea; border-bottom-color: #ffffff24; }
+.header .button,
+.button.dark,
+.button.terra { background: #ffc83d; color: #173b2c; }
+.header .button:hover,
+.button.dark:hover,
+.button.terra:hover { background: #ffdb70; }
+.header .language { border-color: #ffc83d80; background: #ffc83d1c; }
+.header .language-option,
+.header .language-divider { color: #ffe28b; }
+.header .language-option.is-active { background: #ffc83d; color: #153c2b; }
+
+.hero { background: #123f2d; border-radius: 0; }
+.hero-shade {
+  background:
+    linear-gradient(90deg, #0b3527d9 0%, #0b35279c 31%, #0b352742 58%, transparent 82%),
+    linear-gradient(0deg, #082f238f 0%, transparent 48%);
+}
+.hero-content .hero-place { border-color: #ffc83d8c; background: #0b3527b3; color: #fff0b7; }
+.hero-content .hero-place svg { color: #ffc83d; }
+.hero-content .hero-cta { border-color: #ffc83d; background: #ffc83d; color: #123f2d; }
+.hero-content .hero-cta:hover { background: #ffdc72; }
+.hero-playback { background: #0b3527dc; }
+
+/* Booking comes first and reads as one clear task rather than another dark band. */
+#availability.availability-section {
+  margin: 0;
+  background: #eff6e9;
+  color: #153c2b;
+}
+#availability .availability-heading h2,
+#availability .availability-rate strong,
+#availability .calendar-toolbar > div,
+#availability .calendar-month h3 { color: #153c2b; }
+#availability .availability-heading p,
+#availability .availability-rate,
+#availability .date-step-copy span,
+#availability .calendar-legend > span,
+#availability .availability-note { color: #5b7062; }
+#availability .availability-rate small { color: #d24a2e; }
+#availability .availability-rate { border-left-color: #ffc83d; }
+#availability .availability-card,
+#availability .reservation-card {
+  border-color: #bfd1bd;
+  background: #fffef8;
+  color: #153c2b;
+  box-shadow: 0 18px 48px #123f2d16;
+}
+#availability .reservation-card h3,
+#availability .reservation-card legend { color: #153c2b; }
+#availability .reservation-card > p,
+#availability .reservation-card label,
+#availability .reservation-card .phone-label,
+#availability .reservation-card .card-note { color: #5b7062; }
+#availability .calendar-toolbar { border-bottom-color: #d6e1d1; }
+#availability .calendar-toolbar button { border-color: #b9ceb8; background: #f5f8ef; color: #185239; }
+#availability .calendar-toolbar button:hover:not(:disabled) { border-color: #185239; background: #185239; color: white; }
+#availability .date-step { border-color: #ccd9c7; background: #f7faf3; }
+#availability .date-step-number { background: #dfeadd; color: #476052; }
+#availability .date-step-copy strong { color: #476052; }
+#availability .date-step.is-current { border-color: #1f6b48; background: #edf6e9; box-shadow: 0 0 0 2px #1f6b4817; }
+#availability .date-step.is-current .date-step-number,
+#availability .date-step.is-complete .date-step-number { background: #1f6b48; color: white; }
+#availability .date-step.is-current .date-step-copy strong,
+#availability .date-step.is-complete .date-step-copy strong,
+#availability .date-step.is-complete .date-step-copy span { color: #185239; }
+#availability .calendar-weekday { color: #64766a; }
+#availability .calendar-day { color: #153c2b; }
+#availability .calendar-day.is-available { background: #e3f0dc; color: #185239; }
+#availability .calendar-day.is-available:not(:disabled):hover { border-color: #1f6b48; background: #cfe5c7; }
+#availability .calendar-day.is-selected,
+#availability .calendar-day.is-between { background: #1f6b48; color: white; box-shadow: 0 5px 16px #123f2d2b; }
+#availability .calendar-day.is-occupied,
+#availability .calendar-day:disabled:not(.is-occupied) { background: #eef0e9; color: #929b92; }
+#availability .calendar-legend { border-top-color: #d6e1d1; }
+#availability .legend-dot { border-color: #1f6b48; background: #1f6b48; }
+#availability .calendar-selection { border-color: #1f6b48; background: #1f6b48; color: white; }
+#availability .selection-summary strong,
+#availability .selection-summary > span { color: white; }
+#availability .calendar-selection .button { border-color: #ffc83d; background: #ffc83d; color: #153c2b; }
+#availability .calendar-selection .button:hover:not(:disabled) { background: #ffdc72; }
+#availability .reservation-card input,
+#availability .reservation-card select,
+#availability .reservation-card .phone-control { border-color: #bfd1bd; background: white; color: #153c2b; }
+#availability .reservation-card .country-toggle { border-right-color: #d3dfcf; background: #edf3e9; color: #153c2b; }
+
+#experiencias.amenities { background: #185239; }
+#experiencias .section-heading h2 em,
+#experiencias .experience-stats strong,
+#experiencias .experience-stats svg,
+#experiencias .experience-wifi-plus { color: #ffc83d; }
+#experiencias .experience-wifi-feature { border-color: #ffc83d70; background: #ffc83d12; }
+#experiencias .experience-stats { border-color: #ffc83d70; background: #123f2d; box-shadow: none; }
+#experiencias .experience-stats span,
+#experiencias .experience-wifi-description { color: #d7e6d8; }
+
+.location-premium { background: #f7f1df; color: #153c2b; }
+.premium-eyebrow { color: #d24a2e; }
+.location-premium__copy h2,
+.location-distance .route-copy > strong,
+.location-distance.is-featured .route-copy > span { color: #153c2b; }
+.location-premium__description,
+.location-distance .route-copy > span { color: #536a5b; }
+.location-distance.is-featured .route-copy > strong,
+.location-distance .route-copy > strong small { color: #d24a2e; }
+.location-distance,
+.location-distance.is-featured { border-color: #153c2b2b; }
+.location-premium__cta { border-color: #1f6b48; background: #1f6b48; }
+.location-premium__cta:hover { background: #185239; }
+
+.floating-chat { background: #1f6b48; }
+footer { background: #0c3023; }
+
 .header,
 .header nav,
 .header-actions,
@@ -443,4 +567,214 @@ footer .brand { font-family: var(--premium-display); }
   .floating-chat__label { transition: none; }
   .premium-gallery-grid article:hover,
   .premium-gallery-grid article:hover .experience-visual img { transform: none; }
+}
+
+/* Keep status controls inside the same five-colour system. */
+#availability .available-dot { border-color: #c09891; background: #c09891; }
+#availability .occupied-dot { border-color: #bea8a7; background: #bea8a7; }
+#availability .selected-dot { border-color: #775144; background: #775144; }
+#availability .currency-option.is-active { border-color: #775144; background: #c09891; color: #2a0800; }
+#availability .currency-option:not(.is-active) { background: #eadedd; color: #775144; }
+
+/* Final palette pass: keep legacy component rules from restoring the old brown. */
+.hero-shade {
+  background:
+    linear-gradient(90deg, #0b3527d9 0%, #0b35279c 31%, #0b352742 58%, transparent 82%),
+    linear-gradient(0deg, #082f238f 0%, transparent 48%);
+}
+.hero-content .hero-place { border-color: #ffc83d8c; background: #0b3527b3; color: #fff0b7; }
+.location-premium__map { border-color: #153c2b35; background: #dce6d1; box-shadow: 0 22px 50px #123f2d1c; }
+.location-premium__map-label { background: #123f2de8; color: #fffdf4; }
+.premium-eyebrow { color: #d24a2e; }
+.location-premium__copy h2,
+.location-distance .route-copy > strong,
+.location-distance.is-featured .route-copy > span { color: #153c2b; }
+.location-premium__description,
+.location-premium__distance-label,
+.location-distance .route-copy > span { color: #536a5b; }
+.location-distance.is-featured .route-copy > strong,
+.location-distance .route-copy > strong small { color: #d24a2e; }
+.location-distance,
+.location-distance.is-featured { border-color: #153c2b2b; }
+.location-distance.is-featured { background: radial-gradient(ellipse at 10% 50%, #ffc83d1a, transparent 72%); }
+
+/* Remove the remaining coffee-coloured interface panels. */
+.spaces-tour {
+  --spaces-bg: #0c3023;
+  --spaces-panel: #123f2d;
+  --spaces-accent: #ffc83d;
+}
+#availability .availability-rate { border-color: #ffc83d; background: #fffef8; box-shadow: 0 14px 32px #123f2d18; }
+#availability .availability-rate strong { color: #185239; }
+#availability .booking-date-summary,
+#availability .guest-picker,
+#availability .quick-date-summary {
+  border-color: #bfd1bd;
+  background: #edf5e8;
+  color: #153c2b;
+}
+#availability .booking-date-summary span,
+#availability .guest-picker span,
+#availability .guest-picker small { color: #536a5b; }
+#availability .booking-date-summary strong,
+#availability .guest-picker strong,
+#availability .guest-picker output { color: #153c2b; }
+#availability .quote-panel,
+#availability .booking-progress { border-color: #bfd1bd; background: #f7faf3; }
+#availability .quote-toolbar { border-bottom-color: #d6e1d1; }
+#availability .quote-toolbar .currency-switch { border-color: #bfd1bd; background: #e7efe2; }
+#availability .progress-step > span { border-color: #bfd1bd; background: #e2ecdd; color: #536a5b; }
+#availability .progress-step.is-active > span { border-color: #ffc83d; background: #ffc83d; color: #153c2b; }
+#availability .guest-counter button { border-color: #a9c2a8; color: #185239; }
+
+/* User-selected palette: quiet espresso, taupe and dusty blush. */
+:root {
+  --premium-coffee: #2a0800;
+  --premium-coffee-raised: #775144;
+  --premium-gold: #c09891;
+  --premium-sand: #f4d8d8;
+  --premium-sand-ink: #2a0800;
+  --premium-sand-muted: #775144;
+}
+body { background: #f4d8d8; color: #2a0800; }
+.header { background: #2a0800f2; border-bottom-color: #c0989148; }
+.header .button,
+.button.dark,
+.button.terra,
+.hero-content .hero-cta { border-color: #f4d8d8; background: #f4d8d8; color: #2a0800; }
+.header .button:hover,
+.button.dark:hover,
+.button.terra:hover,
+.hero-content .hero-cta:hover { background: #bea8a7; }
+.header .language { border-color: #c0989180; background: #c098911c; }
+.header .language-option,
+.header .language-divider { color: #f4d8d8; }
+.header .language-option.is-active { background: #c09891; color: #2a0800; }
+.hero { background: #2a0800; }
+.hero-shade {
+  background:
+    linear-gradient(90deg, #2a0800d9 0%, #2a08009f 31%, #2a080045 58%, transparent 82%),
+    linear-gradient(0deg, #2a08008f 0%, transparent 48%);
+}
+.hero-content .hero-place { border-color: #c0989190; background: #2a0800b8; color: #f4d8d8; }
+.hero-content .hero-place svg { color: #c09891; }
+.hero-playback { background: #2a0800dc; }
+
+#availability.availability-section { background: #f4eeee; color: #2a0800; }
+#availability .availability-heading h2,
+#availability .availability-rate strong,
+#availability .calendar-toolbar > div,
+#availability .calendar-month h3,
+#availability .reservation-card h3,
+#availability .reservation-card legend,
+#availability .booking-date-summary strong,
+#availability .guest-picker strong,
+#availability .guest-picker output { color: #2a0800; }
+#availability .availability-heading p,
+#availability .availability-rate,
+#availability .date-step-copy span,
+#availability .calendar-legend > span,
+#availability .availability-note,
+#availability .reservation-card > p,
+#availability .reservation-card label,
+#availability .reservation-card .phone-label,
+#availability .reservation-card .card-note,
+#availability .booking-date-summary span,
+#availability .guest-picker span,
+#availability .guest-picker small { color: #775144; }
+#availability .availability-rate small { color: #775144; }
+#availability .availability-rate { border-color: #c09891; background: #fffafa; box-shadow: 0 14px 32px #2a080018; }
+#availability .availability-card,
+#availability .reservation-card { border-color: #bea8a7; background: #fffafa; color: #2a0800; box-shadow: 0 18px 48px #2a080014; }
+#availability .calendar-toolbar,
+#availability .calendar-legend,
+#availability .quote-toolbar { border-color: #d8c6c5; }
+#availability .calendar-toolbar button { border-color: #bea8a7; background: #f4eeee; color: #775144; }
+#availability .calendar-toolbar button:hover:not(:disabled) { border-color: #775144; background: #775144; color: white; }
+#availability .date-step,
+#availability .booking-date-summary,
+#availability .guest-picker,
+#availability .quick-date-summary,
+#availability .quote-panel,
+#availability .booking-progress { border-color: #cdb8b6; background: #f6eeee; color: #2a0800; }
+#availability .date-step-number,
+#availability .progress-step > span { background: #e3d5d4; color: #775144; }
+#availability .date-step-copy strong { color: #775144; }
+#availability .date-step.is-current { border-color: #775144; background: #f0e4e3; box-shadow: 0 0 0 2px #77514416; }
+#availability .date-step.is-current .date-step-number,
+#availability .date-step.is-complete .date-step-number,
+#availability .progress-step.is-active > span { border-color: #775144; background: #775144; color: white; }
+#availability .date-step.is-current .date-step-copy strong,
+#availability .date-step.is-complete .date-step-copy strong,
+#availability .date-step.is-complete .date-step-copy span { color: #775144; }
+#availability .calendar-day { color: #2a0800; }
+#availability .calendar-day.is-available { background: #eadedd; color: #775144; }
+#availability .calendar-day.is-available:not(:disabled):hover { border-color: #775144; background: #d9c6c4; }
+#availability .calendar-day.is-selected,
+#availability .calendar-day.is-between { background: #775144; color: white; box-shadow: 0 5px 16px #2a08002b; }
+#availability .calendar-selection { border-color: #775144; background: #775144; color: white; }
+#availability .calendar-selection .button { border-color: #f4d8d8; background: #f4d8d8; color: #2a0800; }
+#availability .calendar-selection .button:hover:not(:disabled) { background: #bea8a7; }
+#availability .quote-toolbar .currency-switch { border-color: #bea8a7; background: #e9dddd; }
+#availability .guest-counter button { border-color: #bea8a7; color: #775144; }
+
+.spaces-tour { --spaces-bg: #2a0800; --spaces-panel: #3a1d17; --spaces-accent: #c09891; }
+#experiencias.amenities { background: #775144; }
+#experiencias .section-heading h2 em,
+#experiencias .experience-stats strong,
+#experiencias .experience-stats svg,
+#experiencias .experience-wifi-plus { color: #f4d8d8; }
+#experiencias .experience-wifi-feature { border-color: #c0989190; background: #f4d8d812; }
+#experiencias .experience-stats { border-color: #c0989180; background: #2a0800; }
+#experiencias .experience-stats span,
+#experiencias .experience-wifi-description { color: #e6d7d5; }
+.location-premium { background: #f4eeee; color: #2a0800; }
+.location-premium__map { border-color: #bea8a7; background: #e6dada; box-shadow: 0 22px 50px #2a080018; }
+.location-premium__map-label { background: #2a0800e8; color: #f4d8d8; }
+.premium-eyebrow,
+.location-distance.is-featured .route-copy > strong,
+.location-distance .route-copy > strong small { color: #775144; }
+.location-premium__copy h2,
+.location-distance .route-copy > strong,
+.location-distance.is-featured .route-copy > span { color: #2a0800; }
+.location-premium__description,
+.location-premium__distance-label,
+.location-distance .route-copy > span { color: #775144; }
+.location-distance,
+.location-distance.is-featured { border-color: #77514435; }
+.location-distance.is-featured { background: radial-gradient(ellipse at 10% 50%, #c0989120, transparent 72%); }
+.location-premium__cta,
+.floating-chat { border-color: #2a0800; background: #2a0800; color: #fff7f6; }
+.location-premium__cta:hover { background: #775144; }
+footer { background: #2a0800; }
+
+/* Motion stays tactile and restrained inside the new palette. */
+.hero-content .hero-cta,
+.header .button,
+.location-premium__cta,
+.floating-chat,
+#availability .calendar-toolbar button,
+#availability .calendar-day,
+#availability .guest-counter button {
+  transition: transform .22s ease, background-color .28s ease, color .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+.hero-content .hero-cta:hover,
+.header .button:hover,
+.location-premium__cta:hover,
+.floating-chat:hover { transform: translateY(-2px); box-shadow: 0 10px 24px #2a080026; }
+#availability .calendar-day.is-selected { animation: palette-select .32s ease both; }
+#experiencias .experience-stats > div:hover { border-color: #c0989180; background: #c0989112; }
+@keyframes palette-select {
+  from { transform: scale(.88); background: #c09891; }
+  to { transform: scale(1); background: #775144; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-content .hero-cta,
+  .header .button,
+  .location-premium__cta,
+  .floating-chat,
+  #availability .calendar-toolbar button,
+  #availability .calendar-day,
+  #availability .guest-counter button { transition: none; }
+  #availability .calendar-day.is-selected { animation: none; }
 }

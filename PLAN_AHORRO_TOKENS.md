@@ -1,4 +1,5 @@
 # Plan de ahorro de tokens
+- Configuración operativa: el Director resuelve ajustes pequeños y coordina normalmente una sola worker `gpt-6-luna` en esfuerzo `low` para lotes sustanciales. La política completa vive en `AGENTS.md`.
 - Director coordina una hija GPT-6-Luna. Agrupar implementación, iteración y QA en una tarea; no crear agentes para cambios pequeños.
 - Tras dos intentos sin resolver, registrar diagnóstico concreto y pasar a Sol low antes de crear más agentes.
 - Consultar el grafo solo ante dependencias desconocidas: `graphify query "simbolo" --budget 600` (máximo 1000). Usar `rg` y extractos pequeños para HTML/CSS.

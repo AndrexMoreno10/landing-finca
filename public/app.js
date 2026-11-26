@@ -72,3 +72,14 @@ function loadBrowserExchangeRate(){if(config?.fx||exchangeRateRequest)return exc
 function translate(){document.documentElement.lang=lang;$$(`[data-${lang}]`).forEach(element=>{element.innerHTML=element.getAttribute(`data-${lang}`)});$$('img[data-alt-es],img[data-alt-en]').forEach(image=>{const value=image.getAttribute(`data-alt-${lang}`);if(value)image.alt=value});$('#language').setAttribute('aria-label',t('Cambiar a inglés','Switch to Spanish'));renderNightlyPrice();updateQuote();}
 $('#year').textContent=new Date().getFullYear();lang=safeGet('chalet-language')==='en'?'en':'es';translate();
 api('/api/config').then(c=>{config=c;showConfig();updateQuote();if(!c.fx)loadBrowserExchangeRate()}).catch(()=>{toast(t('No pudimos conectar con el servidor. Recarga para enviar solicitudes.','Could not connect to the server. Reload to send requests.'));});
+// Keep the booking decision immediately after the hero. The source sections stay
+// independent so older links and reservation scripts keep their existing IDs.
+document.addEventListener('DOMContentLoaded', () => {
+  const main = document.querySelector('#main-content');
+  const hero = main?.querySelector('.hero');
+  const availability = main?.querySelector('#availability');
+  if (main && hero && availability && hero.nextElementSibling !== availability) {
+    hero.insertAdjacentElement('afterend', availability);
+  }
+});
+
