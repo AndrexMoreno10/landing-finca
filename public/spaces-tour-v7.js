@@ -9,6 +9,13 @@
   const kicker = dialog.querySelector('[data-space-dialog-kicker]');
   const closeButton = dialog.querySelector('[data-space-close]');
   const visual = dialog.querySelector('.space-dialog__visual');
+  const portal = document.querySelector('[data-space-portal]');
+  const directoryCards = [...document.querySelectorAll('.spaces-directory [data-space-id]')];
+  const portalImage = portal?.querySelector('[data-space-portal-image]');
+  const portalNumber = portal?.querySelector('[data-space-portal-number]');
+  const portalTitle = portal?.querySelector('[data-space-portal-title]');
+  const portalDescription = portal?.querySelector('[data-space-portal-description]');
+  let previewCard = directoryCards[0] || null;
   let activeSpace = null;
 
   const spaces = {
@@ -96,6 +103,28 @@
     closeButton.setAttribute('aria-label', lang === 'en' ? 'Close window' : 'Cerrar ventana');
   };
 
+  const previewSpace = card => {
+    if (!portal || !card) return;
+    const lang = document.documentElement.lang === 'en' ? 'en' : 'es';
+    const space = spaces[card.dataset.spaceId];
+    if (!space) return;
+    previewCard?.classList.remove('is-previewing');
+    previewCard = card;
+    previewCard.classList.add('is-previewing');
+    portal.dataset.spaceId = card.dataset.spaceId;
+    portalImage.src = space.image;
+    portalNumber.textContent = space.number;
+    portalTitle.textContent = space.title[lang];
+    portalDescription.textContent = card.querySelector('small')?.dataset[lang] || space.description[lang];
+    portal.setAttribute('aria-label', (lang === 'en' ? 'Open video: ' : 'Abrir video: ') + space.title[lang]);
+  };
+
+  directoryCards.forEach(card => {
+    card.addEventListener('pointerenter', () => previewSpace(card));
+    card.addEventListener('focus', () => previewSpace(card));
+  });
+  previewSpace(previewCard);
+
   cards.forEach(card => {
     card.addEventListener('click', () => {
       activeSpace = spaces[card.dataset.spaceId];
@@ -118,6 +147,7 @@
   });
   new MutationObserver(() => {
     if (dialog.open && activeSpace) renderSpace(activeSpace);
+    previewSpace(previewCard);
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 
   const section = document.querySelector('.spaces-tour');
