@@ -576,6 +576,185 @@ footer .brand { font-family: var(--premium-display); }
 #availability .currency-option.is-active { border-color: #775144; background: #c09891; color: #2a0800; }
 #availability .currency-option:not(.is-active) { background: #eadedd; color: #775144; }
 
+/* Final monochrome system requested by the client. Photos retain natural colour. */
+:root {
+  --premium-coffee: #111111;
+  --premium-coffee-raised: #676767;
+  --premium-gold: #b8b8b8;
+  --premium-sand: #ededed;
+  --premium-sand-ink: #171717;
+  --premium-sand-muted: #666666;
+}
+body { background: #ededed !important; color: #171717; }
+.header,
+footer { background: #111111 !important; border-color: #454545 !important; }
+.header .button,
+.button.dark,
+.button.terra,
+.hero-content .hero-cta,
+.footer-location-link {
+  border-color: #ededed !important;
+  background: #ededed !important;
+  color: #171717 !important;
+}
+.header .button:hover,
+.button.dark:hover,
+.button.terra:hover,
+.hero-content .hero-cta:hover,
+.footer-location-link:hover { background: #c8c8c8 !important; color: #111111 !important; }
+.header .language { border-color: #777 !important; background: #2b2b2b !important; }
+.header .language-option,
+.header .language-divider { color: #d8d8d8 !important; }
+.header .language-option.is-active { background: #b8b8b8 !important; color: #111 !important; }
+.hero { background: #111 !important; }
+.hero-shade {
+  background:
+    linear-gradient(90deg, #111111db 0%, #1111119e 31%, #11111142 58%, transparent 82%),
+    linear-gradient(0deg, #1111118f 0%, transparent 48%) !important;
+}
+.hero-content .hero-place { border-color: #b8b8b890 !important; background: #111111b8 !important; color: #ededed !important; }
+.hero-content .hero-place svg { color: #b8b8b8 !important; }
+.hero-playback { border-color: #777 !important; background: #111111dc !important; }
+
+#availability.availability-section,
+.location-premium { background: #ededed !important; color: #171717 !important; }
+#availability .availability-heading h2,
+#availability .availability-rate strong,
+#availability .calendar-toolbar > div,
+#availability .calendar-month h3,
+#availability .reservation-card h3,
+#availability .reservation-card legend,
+#availability .booking-date-summary strong,
+#availability .guest-picker strong,
+#availability .guest-picker output,
+.location-premium__copy h2,
+.location-distance .route-copy > strong,
+.location-distance.is-featured .route-copy > span { color: #171717 !important; }
+#availability .availability-heading p,
+#availability .availability-rate,
+#availability .availability-rate small,
+#availability .date-step-copy span,
+#availability .calendar-legend > span,
+#availability .availability-note,
+#availability .reservation-card > p,
+#availability .reservation-card label,
+#availability .reservation-card .phone-label,
+#availability .reservation-card .card-note,
+#availability .booking-date-summary span,
+#availability .guest-picker span,
+#availability .guest-picker small,
+.location-premium__description,
+.location-premium__distance-label,
+.location-distance .route-copy > span,
+.premium-eyebrow { color: #666 !important; }
+#availability .availability-rate,
+#availability .availability-card,
+#availability .reservation-card { border-color: #b8b8b8 !important; background: #f7f7f7 !important; box-shadow: 0 18px 48px #11111114 !important; }
+#availability .calendar-toolbar,
+#availability .calendar-legend,
+#availability .quote-toolbar { border-color: #c8c8c8 !important; }
+#availability .calendar-toolbar button { border-color: #b8b8b8 !important; background: #ededed !important; color: #555 !important; }
+#availability .calendar-toolbar button:hover:not(:disabled) { border-color: #555 !important; background: #555 !important; color: white !important; }
+#availability .date-step,
+#availability .booking-date-summary,
+#availability .guest-picker,
+#availability .quick-date-summary,
+#availability .quote-panel,
+#availability .booking-progress { border-color: #c0c0c0 !important; background: #eeeeee !important; color: #171717 !important; }
+#availability .date-step-number,
+#availability .progress-step > span { border-color: #b8b8b8 !important; background: #d4d4d4 !important; color: #555 !important; }
+#availability .date-step-copy strong { color: #666 !important; }
+#availability .date-step.is-current { border-color: #666 !important; background: #e3e3e3 !important; box-shadow: 0 0 0 2px #66666618 !important; }
+#availability .date-step.is-current .date-step-number,
+#availability .date-step.is-complete .date-step-number,
+#availability .progress-step.is-active > span { border-color: #555 !important; background: #555 !important; color: white !important; }
+#availability .date-step.is-current .date-step-copy strong,
+#availability .date-step.is-complete .date-step-copy strong,
+#availability .date-step.is-complete .date-step-copy span { color: #444 !important; }
+#availability .calendar-day { color: #222 !important; }
+#availability .calendar-day.is-available { background: #d7d7d7 !important; color: #333 !important; }
+#availability .calendar-day.is-available:not(:disabled):hover { border-color: #555 !important; background: #b8b8b8 !important; }
+#availability .calendar-day.is-selected,
+#availability .calendar-day.is-between { background: #555 !important; color: white !important; box-shadow: 0 5px 16px #1113 !important; }
+#availability .calendar-selection { border-color: #555 !important; background: #555 !important; color: white !important; }
+#availability .calendar-selection .button { border-color: #ededed !important; background: #ededed !important; color: #171717 !important; }
+#availability .calendar-selection .button:hover:not(:disabled) { background: #c8c8c8 !important; }
+#availability .quote-toolbar .currency-switch { border-color: #b8b8b8 !important; background: #dedede !important; }
+#availability .currency-option.is-active { border-color: #555 !important; background: #b8b8b8 !important; color: #111 !important; }
+#availability .currency-option:not(.is-active) { background: #dedede !important; color: #666 !important; }
+#availability .guest-counter button { border-color: #aaa !important; color: #555 !important; }
+#availability .available-dot { border-color: #999 !important; background: #999 !important; }
+#availability .occupied-dot { border-color: #c8c8c8 !important; background: #c8c8c8 !important; }
+#availability .selected-dot { border-color: #555 !important; background: #555 !important; }
+
+.spaces-tour { --spaces-bg: #111; --spaces-panel: #292929; --spaces-accent: #b8b8b8; }
+#experiencias.amenities { background: #676767 !important; }
+#experiencias .section-heading h2 em,
+#experiencias .experience-stats strong,
+#experiencias .experience-stats svg,
+#experiencias .experience-wifi-plus { color: #ededed !important; }
+#experiencias .experience-wifi-feature { border-color: #b8b8b890 !important; background: #ffffff10 !important; }
+#experiencias .experience-stats { border-color: #999 !important; background: #111 !important; }
+#experiencias .experience-stats span,
+#experiencias .experience-wifi-description { color: #d7d7d7 !important; }
+#experiencias .experience-stats > div:hover { border-color: #b8b8b8 !important; background: #ffffff10 !important; }
+.location-premium__map { border-color: #b8b8b8 !important; background: #dedede !important; box-shadow: 0 22px 50px #1112 !important; }
+.location-premium__map-label { background: #111111e8 !important; color: #ededed !important; }
+.location-distance.is-featured .route-copy > strong,
+.location-distance .route-copy > strong small { color: #555 !important; }
+.location-distance,
+.location-distance.is-featured { border-color: #7775 !important; }
+.location-distance.is-featured { background: radial-gradient(ellipse at 10% 50%, #9992, transparent 72%) !important; }
+.location-premium__cta,
+.floating-chat { border-color: #111 !important; background: #111 !important; color: #f5f5f5 !important; }
+.location-premium__cta:hover,
+.floating-chat:hover { background: #555 !important; }
+@keyframes palette-select {
+  from { transform: scale(.88); background: #b8b8b8; }
+  to { transform: scale(1); background: #555; }
+}
+
+/* Cover legacy component accents that used literal brown/orange values. */
+.spaces-tour { background: #111 !important; color: #ededed !important; }
+.spaces-reel,
+.space-card,
+.space-dialog__panel { border-color: #666 !important; background-color: #292929 !important; }
+.spaces-reel::before { background: #2b2b2b !important; }
+.spaces-reel::after,
+.space-card::after { background: linear-gradient(180deg, transparent 35%, #111111e8 100%) !important; }
+.spaces-tour__eyebrow,
+.spaces-reel__eyebrow,
+.space-card__copy small,
+.space-dialog__eyebrow { color: #b8b8b8 !important; }
+.spaces-reel__controls button:hover,
+.space-card__open:hover,
+.space-dialog__cta { border-color: #b8b8b8 !important; background: #b8b8b8 !important; color: #111 !important; }
+.space-dialog__cta:hover { background: #d0d0d0 !important; }
+
+#availability .availability-rate strong span,
+#availability .booking-date-summary > div > span,
+#availability .booking-date-summary a,
+#availability .quote-toolbar > span,
+#availability .currency-option.is-active small,
+#availability .currency-option small { color: #666 !important; }
+#availability .booking-date-summary a { border-color: #999 !important; }
+#availability .booking-date-summary a:hover { border-color: #555 !important; background: #ddd !important; }
+#availability .booking-progress > i,
+#availability .booking-progress > i::after { background: #777 !important; }
+
+.footer-location,
+.footer-stay-info { border-color: #555 !important; background: #1d1d1d !important; }
+.footer-location-icon { border-color: #777 !important; background: #303030 !important; color: #b8b8b8 !important; }
+.footer-location-place,
+.stay-time-item strong,
+footer > small { color: #e5e5e5 !important; }
+.stay-time-item > span,
+.footer-message strong,
+.currency-attribution a { color: #b8b8b8 !important; }
+.stay-time-item + .stay-time-item,
+.footer-stay-info,
+footer > small { border-color: #555 !important; }
+
 /* Final palette pass: keep legacy component rules from restoring the old brown. */
 .hero-shade {
   background:
